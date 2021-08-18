@@ -5,23 +5,21 @@
     <title>Title</title>
     <link href="assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/css/style.css" rel="stylesheet">
+
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light ">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">🖥 Bank Management System </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+            <a class="navbar-brand" id="logOut" href="#"> Logout 🙎🏽‍</a>
+
         </div>
     </nav>
 </header>
 <main>
-    <div class="container">
-        <div class="container">
+    <div class="loginPage">
+        <div class="container ">
             <div class="col align-self-center loginPanel">
                 <form>
                     <div class="mb-3">
@@ -37,13 +35,382 @@
                         <input type="checkbox" class="form-check-input" id="exampleCheck1">
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div>
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="button" class="btn btn-primary" id="loginButton">Login</button>
                 </form>
             </div>
-
-
         </div>
+    </div>
 
+    <div class="dashBoard">
+
+            <div class="row menu">
+                <div class="col-2 menu-col-2">
+                    <div class="btn-group-vertical">
+                        <button type="button" class="btn btn-primary menu-btn" id="dashboard-menu-btn">DashBoard</button>
+                        <button type="button" class="btn btn-primary menu-btn" id="employee-menu-btn">Employee Management</button>
+                        <button type="button" class="btn btn-primary menu-btn" id="audit-menu-btn">Audit Management</button>
+
+                        <button type="button" class="btn btn-primary menu-btn" id="customer-menu-btn">Customer Management</button>
+                        <button type="button" class="btn btn-primary menu-btn" id="account-menu-btn">Account Management</button>
+                        <button type="button" class="btn btn-primary menu-btn" id="transaction-menu-btn">Transaction Management</button>
+                        <button type="button" class="btn btn-primary menu-btn" id="report-menu-btn">Report Management</button>
+
+                    </div>
+                </div>
+                <div class="col-10 dashBoardRight">
+                    <!----------------------------------------------there is a dashboard management area---------------------------------------------->
+                    <div id="dashBoard-section">
+                        <h4 class="mx-3 py-3">DashBoard Management</h4>
+                        <div class="counter-section mx-5 mt-3">
+
+                            <div class="card mb-3 mx-3" style="max-width: 440px;">
+                                <div class="row g-0">
+                                    <div class="col-md-4 p-4">
+                                        <img src="https://iconscout.com/iconscout_logo-1024x1024.png" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Customer Count</h5>
+                                            <h1 class="card-text">100</h1>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3 mx-3" style="max-width: 440px;">
+                                <div class="row g-0">
+                                    <div class="col-md-4 p-4">
+                                        <img src="https://iconscout.com/iconscout_logo-1024x1024.png" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Account Count</h5>
+                                            <h1 class="card-text">100</h1>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card mb-3 mx-3" style="max-width: 440px;">
+                                <div class="row g-0">
+                                    <div class="col-md-4 p-4">
+                                        <img src="https://iconscout.com/iconscout_logo-1024x1024.png" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Employee Count</h5>
+                                            <h1 class="card-text">100</h1>
+                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                    <!----------------------------------------------there is a employee management area---------------------------------------------->
+                    <div id="employee-section">
+                        <h4 class="mx-3 py-3">Employee Management</h4>
+                        <div class="mx-5 employeeCrud-section">
+                            <div class="mb-2 mx-3">
+                                <label for="fullName" class="form-label">Employee Full Name</label>
+                                <input type="text" class="form-control" id="fullName" placeholder="w.u.s.abeysekara">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="emailAddress" class="form-label">Employee Email Address</label>
+                                <input type="email" class="form-control" id="emailAddress" placeholder="yourmail@domain.com">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="contact" class="form-label">Employee Contact Number</label>
+                                <input type="text" class="form-control" id="contact" placeholder="contact">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="userType" class="form-label">Employee Role</label>
+
+                                <select class="form-select" id="userType">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Admin</option>
+                                    <option value="2">Employee</option>
+                                </select>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="password">
+                            </div>
+                            <div style="display: flex">
+                                <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-primary">Delete</button>
+                                    <button type="button" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="mt-3">
+                                    <form class="d-flex">
+                                        <input class="form-control me-2" type="search" placeholder="Search User ID" aria-label="Search" >
+                                        <button class="btn btn-outline-success" type="button">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="table-section mx-3 py-3">
+                            <table class="table table-bordered border-primary">
+                                <thead>
+                                <tr>
+                                    <th scope="col">UserID</th>
+                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Email Address</th>
+                                    <th scope="col">Contact NO</th>
+                                    <th scope="col">Employee Role</th>
+                                    <th scope="col">Password</th>
+                                </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!----------------------------------------------there is a audit management area---------------------------------------------->
+                    <div id="audit-section">
+                        <h4 class="mx-3 py-3">Audit Management</h4>
+                        <div class="mx-5">
+                            <form class=" mb-2 mx-3 d-flex">
+                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                                <button class="btn btn-outline-success" type="button">Search</button>
+                            </form>
+                        </div>
+                        <div class="mx-5 auditCrud-section" style="display: flex">
+                            <div class="mb-2 mx-3">
+                                <label for="auditID" class="form-label">Audit ID</label>
+                                <input type="text" class="form-control" id="auditID" disabled>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="auditUserID" class="form-label">User ID</label>
+                                <input type="text" class="form-control" id="auditUserID" disabled>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="auditDate" class="form-label">Audit Date</label>
+                                <input type="text" class="form-control" id="auditDate" disabled >
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="auditTime" class="form-label">Audit Time</label>
+                                <input type="text" class="form-control" id="auditTime" disabled>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="auditType" class="form-label">Audit Type</label>
+                                <input type="text" class="form-control" id="auditType" disabled>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="auditDesc" class="form-label">Audit Desc</label>
+                                <input type="text" class="form-control" id="auditDesc" disabled>
+                            </div>
+
+
+                        </div>
+                        <div class="table-section mx-3 py-3">
+                            <table class="table table-bordered border-primary">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Audit ID</th>
+                                    <th scope="col">User ID</th>
+                                    <th scope="col">Audit Date</th>
+                                    <th scope="col">Audit Time</th>
+                                    <th scope="col">Audit Type</th>
+                                    <th scope="col">Audit Desc</th>
+                                </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!----------------------------------------------there is a customer management area---------------------------------------------->
+                    <div id="customer-section">
+                        <h4 class="mx-3 py-3">Customer Management</h4>
+                        <div class="mx-5 customerCrud-section">
+                            <div class="mb-2 mx-3">
+                                <label for="customerFullName" class="form-label">Employee Full Name</label>
+                                <input type="text" class="form-control" id="customerFullName" placeholder="w.u.s.abeysekara">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="customerEmailAddress" class="form-label">Employee Email Address</label>
+                                <input type="email" class="form-control" id="customerEmailAddress" placeholder="yourmail@domain.com">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="customerContact" class="form-label">Employee Contact Number</label>
+                                <input type="text" class="form-control" id="customerContact" placeholder="contact">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="customerAddress" class="form-label">Employee Role</label>
+                                <input type="text" class="form-control" id="customerAddress" placeholder="Address">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="dob" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="dob" placeholder="Date Of BirthDay">
+                            </div>
+                            <div style="display: flex">
+                                <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-primary">Delete</button>
+                                    <button type="button" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="mt-3">
+                                    <form class="d-flex">
+                                        <input class="form-control me-2" type="search" placeholder="Search Customer ID" aria-label="Search" >
+                                        <button class="btn btn-outline-success" type="button">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="table-section mx-3 py-3">
+                            <table class="table table-bordered border-primary">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Customer ID</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Customer Address</th>
+                                    <th scope="col">Contact NO</th>
+                                    <th scope="col">DOB</th>
+                                </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div >
+                    <!----------------------------------------------there is a account management area---------------------------------------------->
+                    <div id="account-section">
+                        <h4 class="mx-3 py-3">Account Management</h4>
+                        <div class="mx-5 accountCrud-section">
+                            <div class="mb-2 mx-3">
+                                <label for="accountName" class="form-label">Account Name</label>
+                                <input type="text" class="form-control" id="accountName" placeholder="w.u.s.abeysekara">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="accountNumber" class="form-label">Account Number</label>
+                                <input type="email" class="form-control" id="accountNumber" placeholder="Account Number">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="customerID" class="form-label">Customer ID</label>
+                                <input type="text" class="form-control" id="customerID" placeholder="Customer ID">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="accountType" class="form-label">Employee Role</label>
+
+                                <select class="form-select" id="accountType">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Saving Account</option>
+                                    <option value="2">Current Account</option>
+                                </select>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="openDate" class="form-label">Open Date</label>
+                                <input type="date" class="form-control" id="openDate" placeholder="Open Date">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="defaultAmount" class="form-label">Default Amount</label>
+                                <input type="text" class="form-control" id="defaultAmount" placeholder="Default Amount" disabled value="500.00">
+                            </div>
+                            <div style="display: flex">
+                                <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-primary">Delete</button>
+                                    <button type="button" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="mt-3">
+                                    <form class="d-flex">
+                                        <input class="form-control me-2" type="search" placeholder="Search Account ID" aria-label="Search" >
+                                        <button class="btn btn-outline-success" type="button">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="table-section mx-3 py-3">
+                            <table class="table table-bordered border-primary">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Customer ID</th>
+                                    <th scope="col">Customer Name</th>
+                                    <th scope="col">Customer Address</th>
+                                    <th scope="col">Contact NO</th>
+                                    <th scope="col">DOB</th>
+                                </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!----------------------------------------------there is a transaction management area---------------------------------------------->
+                    <div id="transaction-section">
+                        <h4 class="mx-3 py-3">Transaction Management</h4>
+                        <div class="mx-5 transactionCrud-section">
+                            <div class="mb-2 mx-3">
+                                <label for="trans-accountNumber" class="form-label">Account Number</label>
+                                <input type="text" class="form-control" id="trans-accountNumber" placeholder="Account Number">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="trans-userID" class="form-label">User ID</label>
+                                <input type="text" class="form-control" id="trans-userID" placeholder="User ID" disabled>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="transAmount" class="form-label">Transaction Amount</label>
+                                <input type="text" class="form-control" id="transAmount" placeholder="Amount">
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="trans-Type" class="form-label">TransAction Type</label>
+
+                                <select class="form-select" id="trans-Type">
+                                    <option selected>Choose...</option>
+                                    <option value="1">Withdrawal</option>
+                                    <option value="2">Deposit</option>
+                                    <option value="2">Money Transfer</option>
+                                </select>
+                            </div>
+                            <div class="mb-2 mx-3">
+                                <label for="trans-Date" class="form-label">Trans Action Date</label>
+                                <input type="date" class="form-control" id="trans-Date" placeholder="Transaction Date">
+                            </div>
+                            <div style="display: flex">
+                                <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
+                                    <button type="button" class="btn btn-primary">Save</button>
+                                    <button type="button" class="btn btn-primary">Delete</button>
+                                    <button type="button" class="btn btn-primary">Update</button>
+                                </div>
+                                <div class="mt-3">
+                                    <form class="d-flex">
+                                        <input class="form-control me-2" type="search" placeholder="Search User ID" aria-label="Search" >
+                                        <button class="btn btn-outline-success" type="button">Search</button>
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="table-section mx-3 py-3">
+                            <table class="table table-bordered border-primary">
+                                <thead>
+                                <tr>
+                                    <th scope="col">UserID</th>
+                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Email Address</th>
+                                    <th scope="col">Contact NO</th>
+                                    <th scope="col">Employee Role</th>
+                                    <th scope="col">Password</th>
+                                </tr>
+                                </thead>
+
+                            </table>
+                        </div>
+                    </div>
+                    <!----------------------------------------------there is a report management area---------------------------------------------->
+                    <div id="report-section">
+                        <h4 class="mx-3 py-3">Report Management</h4>
+                    </div>
+
+                </div>
+
+            </div>
     </div>
 
 </main>

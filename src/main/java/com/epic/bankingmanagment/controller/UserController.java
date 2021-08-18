@@ -1,6 +1,7 @@
 package com.epic.bankingmanagment.controller;
 
 import com.epic.bankingmanagment.dto.UserDTO;
+import com.epic.bankingmanagment.dto.UserResponseDTO;
 import com.epic.bankingmanagment.exception.NotFoundException;
 import com.epic.bankingmanagment.service.UserService;
 import com.epic.bankingmanagment.util.StandardResponse;
@@ -23,12 +24,39 @@ public class UserController {
     @PostMapping(path = "/registerUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity saveUser(@RequestBody UserDTO dto) {
         userService.registerUser(dto);
-        return new ResponseEntity(new StandardResponse("200", "Done", dto), HttpStatus.CREATED);
+        return new ResponseEntity(new StandardResponse("201", "Done", dto), HttpStatus.CREATED);
     }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getAllUsers() {
         ArrayList<UserDTO> allUsers = userService.getAllUsers();
         return new ResponseEntity(new StandardResponse("200", "Done", allUsers), HttpStatus.OK);
+    }
+
+    @GetMapping(path = "/login")
+    public ResponseEntity loginUser(@RequestParam String email, @RequestParam String password) {
+        UserResponseDTO userResponseDTO = userService.matchesEmail(email, password);
+        return new ResponseEntity(new StandardResponse("202", "Done", userResponseDTO), HttpStatus.ACCEPTED);
+
+
+    }
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity searchUser(@PathVariable int id) {
+        UserDTO userDTO = userService.searchUser(id);
+        return new ResponseEntity(new StandardResponse("200", "Done", userDTO), HttpStatus.OK);
+    }
+
+
+    @DeleteMapping(params = {"id"}, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteUser(@RequestParam int id) {
+        userService.deleteUser(id);
+        return new ResponseEntity(new StandardResponse("200", "Done", null), HttpStatus.OK);
+    }
+
+    @PutMapping(path = ("/updateUser"),consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity updateUser(@RequestBody UserDTO dto) {
+        userService.updateUser(dto);
+        return new ResponseEntity(new StandardResponse("200", "Done", dto), HttpStatus.OK);
     }
 
 }
