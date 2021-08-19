@@ -1,0 +1,16 @@
+    {
+        "userID":"",
+        "fullName":"Udara San",
+        "email":"udarassanjeewa@gmail.com",
+        "contact":"0788409788",
+        "userType":"admin",
+        "password":"12345"
+    }
+    {
+        "userID": "",
+        "fullName": "Kasun Perera",
+        "email": "kasun@gmail.com",
+        "contact": "0718875915",
+        "userType": "employee",
+        "password": "12345"
+    }

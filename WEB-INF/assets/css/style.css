@@ -1,0 +1,125 @@
+.loginPanel {
+    padding: 100px;
+    border: solid #6c757d;
+    border-radius: 10px;
+    align-content: center;
+    justify-content: center;
+    margin: auto;
+    align-items: center;
+    width: 800px;
+}
+
+.loginPage {
+    /*background-color: #0b5ed7;*/
+}
+
+.dashBoardPage {
+    background-color: #ffca2c;
+    height: 100vh;
+}
+
+.menu {
+    background-color: #ffffff;
+    height: 100vh;
+    margin: 0px;
+}
+
+.body {
+    background-color: #0c4128;
+    height: 100vh;
+    margin: 0px;
+}
+
+.dashBoard {
+    width: auto;
+}
+
+.dashBoardRight {
+    margin: 0;
+    padding: 0;
+}
+
+.btn-group-vertical {
+    width: 100%;
+
+}
+
+.menu-col-2 {
+    padding: 0;
+
+}
+
+.menu-btn {
+    background-color: white;
+    margin-bottom: 5px;
+    color: #1a1e21;
+    border: solid white;
+}
+
+.menu-btn:hover {
+    background-color: #00c5ff;
+    border: solid #00c5ff;
+}
+
+.menu-btn:focus {
+    background-color: #00c5ff;
+    border: solid #00c5ff;
+
+}
+
+/* section css */
+#dashBoard-section {
+    background-color: #dc6512;
+    height: 100vh;
+}
+
+#employee-section {
+    background-color: #dc6512;
+    height: 100vh;
+}
+
+#audit-section {
+    background-color: #dc6512;
+    height: 100vh;
+}
+
+#customer-section {
+    background-color: #dc6512;
+    height: 100vh;
+}
+
+#account-section {
+    background-color: #dc6512;
+    height: 100vh;
+}
+
+#transaction-section {
+    background-color: #dc6512;
+    height: 100vh;
+}
+
+#report-section {
+    background-color: #dc6512;
+    height: 100vh;
+}
+
+/*DashBoard Section */
+.counter-section{
+    display: flex;
+}
+/*Employee Section */
+.employeeCrud-section{
+    width: 535px;
+}
+/*Customer Section */
+.customerCrud-section{
+    width: 535px;
+}
+/*Account Section */
+.accountCrud-section{
+    width: 535px;
+}
+/*Transaction Section */
+.transactionCrud-section{
+    width: 535px;
+}
