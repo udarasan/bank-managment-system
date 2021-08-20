@@ -561,4 +561,43 @@ function setAccValuesToInputFields(accountNumber, accountName, openDate, default
 
 
 /*----------------TransAction-Management Controlling Section--------------------*/
+
+$('#doTransaction').click(function () {
+    var defaultAmount = $('#defaultAmount').val()
+    var accountNumber = $('#trans-accountNumber').val()
+    var accountName = $('#accountName').val()
+    var openDate = $('#openDate').val()
+
+    var accountType = $('#accountType').val()
+    var customerID = $('#customerID').val()
+
+    /*-------------Account-registration-------------*/
+
+    $.ajax({
+        method: "POST",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/account/createAccount",
+        data: JSON.stringify({
+
+            'amount': accountNumber,
+            'description': accountName,
+            'date': openDate,
+            'accountNo': defaultAmount,
+            'userID': {'accountTypeID':accountType},
+            'transactionTypeID': {'customerID':customerID},
+
+        }),
+        success: function (resp) {
+            if (resp.code == 201) {
+                confirm("Account Is Created");
+                loadAllAccounts();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+
+})
+
 /*----------------Report-Management Controlling Section-------------------------*/

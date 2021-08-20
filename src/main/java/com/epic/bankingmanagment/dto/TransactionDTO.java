@@ -1,7 +1,6 @@
 package com.epic.bankingmanagment.dto;
 
 import com.epic.bankingmanagment.entity.Account;
-import com.epic.bankingmanagment.entity.Transaction;
 import com.epic.bankingmanagment.entity.TransactionType;
 import com.epic.bankingmanagment.entity.User;
 import lombok.AllArgsConstructor;
@@ -10,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Data
 public class TransactionDTO {
 
