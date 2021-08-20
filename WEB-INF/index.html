@@ -236,34 +236,34 @@
                         <h4 class="mx-3 py-3">Customer Management</h4>
                         <div class="mx-5 customerCrud-section">
                             <div class="mb-2 mx-3">
-                                <label for="customerFullName" class="form-label">Employee Full Name</label>
+                                <label for="customerFullName" class="form-label">Customer Full Name</label>
                                 <input type="text" class="form-control" id="customerFullName" placeholder="w.u.s.abeysekara">
                             </div>
                             <div class="mb-2 mx-3">
-                                <label for="customerEmailAddress" class="form-label">Employee Email Address</label>
+                                <label for="customerEmailAddress" class="form-label">Customer Email Address</label>
                                 <input type="email" class="form-control" id="customerEmailAddress" placeholder="yourmail@domain.com">
                             </div>
                             <div class="mb-2 mx-3">
-                                <label for="customerContact" class="form-label">Employee Contact Number</label>
+                                <label for="customerContact" class="form-label">Customer Contact Number</label>
                                 <input type="text" class="form-control" id="customerContact" placeholder="contact">
                             </div>
                             <div class="mb-2 mx-3">
-                                <label for="customerAddress" class="form-label">Employee Role</label>
-                                <input type="text" class="form-control" id="customerAddress" placeholder="Address">
+                                <label for="customerAddress" class="form-label">Customer Address</label>
+                                <input type="text" class="form-control" id="customerAddress" placeholder="Customer Address">
                             </div>
                             <div class="mb-2 mx-3">
-                                <label for="dob" class="form-label">Password</label>
-                                <input type="password" class="form-control" id="dob" placeholder="Date Of BirthDay">
+                                <label for="dob" class="form-label">Customer Date Of BirthDay</label>
+                                <input type="date" class="form-control" id="dob" placeholder="Date Of BirthDay">
                             </div>
                             <div style="display: flex">
                                 <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-primary">Save</button>
-                                    <button type="button" class="btn btn-primary">Delete</button>
-                                    <button type="button" class="btn btn-primary">Update</button>
+                                    <button type="button" class="btn btn-primary" id="save-customer">Save</button>
+                                    <button type="button" class="btn btn-primary" id="delete-customer">Delete</button>
+                                    <button type="button" class="btn btn-primary" id="update-customer">Update</button>
                                 </div>
                                 <div class="mt-3">
                                     <form class="d-flex">
-                                        <input class="form-control me-2" type="search" placeholder="Search Customer ID" aria-label="Search" >
+                                        <input class="form-control me-2" type="search" placeholder="Search Customer ID" aria-label="Search" id="customerGenID" >
                                         <button class="btn btn-outline-success" type="button">Search</button>
                                     </form>
                                 </div>
@@ -271,16 +271,20 @@
 
                         </div>
                         <div class="table-section mx-3 py-3">
-                            <table class="table table-bordered border-primary">
-                                <thead>
+                            <table class="table table-bordered border-primary table-hover" id="customerTable">
+                                <thead class="table-dark">
                                 <tr>
                                     <th scope="col">Customer ID</th>
                                     <th scope="col">Customer Name</th>
-                                    <th scope="col">Customer Address</th>
-                                    <th scope="col">Contact NO</th>
+                                    <th scope="col">Customer Email Address</th>
                                     <th scope="col">DOB</th>
+                                    <th scope="col">Contact</th>
+                                    <th scope="col">Customer Address</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+
+                                </tbody>
 
                             </table>
                         </div>
@@ -306,8 +310,8 @@
 
                                 <select class="form-select" id="accountType">
                                     <option selected>Choose...</option>
-                                    <option value="1">Saving Account</option>
-                                    <option value="2">Current Account</option>
+                                    <option value="Saving Account">Saving Account</option>
+                                    <option value="Current Account">Current Account</option>
                                 </select>
                             </div>
                             <div class="mb-2 mx-3">
@@ -320,9 +324,9 @@
                             </div>
                             <div style="display: flex">
                                 <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-primary">Save</button>
-                                    <button type="button" class="btn btn-primary">Delete</button>
-                                    <button type="button" class="btn btn-primary">Update</button>
+                                    <button type="button" class="btn btn-primary" id="save-account">Save</button>
+                                    <button type="button" class="btn btn-primary"id="delete-account">Delete</button>
+                                    <button type="button" class="btn btn-primary"id="update-account">Update</button>
                                 </div>
                                 <div class="mt-3">
                                     <form class="d-flex">
@@ -334,16 +338,20 @@
 
                         </div>
                         <div class="table-section mx-3 py-3">
-                            <table class="table table-bordered border-primary">
+                            <table class="table table-bordered border-primary table-hover" id="accountTables">
                                 <thead>
                                 <tr>
+                                    <th scope="col">Account Number</th>
+                                    <th scope="col">Account Name</th>
+                                    <th scope="col">Open Date</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Account Type</th>
                                     <th scope="col">Customer ID</th>
-                                    <th scope="col">Customer Name</th>
-                                    <th scope="col">Customer Address</th>
-                                    <th scope="col">Contact NO</th>
-                                    <th scope="col">DOB</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+
+                                </tbody>
 
                             </table>
                         </div>

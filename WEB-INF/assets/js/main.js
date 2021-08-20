@@ -1,4 +1,5 @@
 hideAll();
+
 function hideAll() {
     $('.loginPage').css({display: "block"});
     $('.dashBoard').css({display: "none"});
@@ -8,14 +9,12 @@ function hideAll() {
 /*--------------------------User-Login-Check--------------------------*/
 
 $('#loginButton').click(function () {
-    const n=1;
-   if (n===1)
-    {
+    const n = 1;
+    if (n === 1) {
         hideAllWithoutDashBoard();
+    } else if (n === 2) {
+        hideAllNotAvailableForEmployee();
     }
-   else if(n===2){
-       hideAllNotAvailableForEmployee();
-   }
 })
 
 $('#logOutButton').click(function () {
@@ -37,6 +36,7 @@ function hideAllWithoutDashBoard() {
     $('#report-section').css({display: "none"});
 
 }
+
 function hideAllNotAvailableForEmployee() {
     $('.loginPage').css({display: "none"});
     $('.dashBoard').css({display: "block"});
@@ -54,6 +54,7 @@ function hideAllNotAvailableForEmployee() {
     $('#report-section').css({display: "block"});
 
 }
+
 $('#dashboard-menu-btn').click(function () {
     $('#dashBoard-section').css({display: "block"});
     $('#employee-section').css({display: "none"});
@@ -72,7 +73,7 @@ $('#employee-menu-btn').click(function () {
     $('#transaction-section').css({display: "none"});
     $('#report-section').css({display: "none"});
 
-/*-------fire function through in selecting menu items--------*/
+    /*-------fire function through in selecting menu items--------*/
 
     loadAllUsers();
 })
@@ -131,40 +132,42 @@ $('#report-menu-btn').click(function () {
 
 $('#save-employee').click(function () {
 
-    var empFullName=$('#fullName').val()
-    var empEmail=$('#emailAddress').val()
-    var empContact=$('#contact').val()
-    var empRole=$('#userType').val()
-    var empPassword=$('#password').val()
+    var userID = $('#userID').val()
+    var empFullName = $('#fullName').val()
+    var empEmail = $('#emailAddress').val()
+    var empContact = $('#contact').val()
+    var empRole = $('#userType').val()
+    var empPassword = $('#password').val()
 
     /*-------------employee-registration-------------*/
 
-$.ajax({
-    method: "POST",
-    contentType: "application/json",
-    url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/registerUser",
-    data: JSON.stringify({
-        'fullName': empFullName,
-        'email': empEmail,
-        'contact': empContact,
-        'userType': empRole,
-        'password': empPassword,
+    $.ajax({
+        method: "POST",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/registerUser",
+        data: JSON.stringify({
+            'fullName': empFullName,
+            'email': empEmail,
+            'contact': empContact,
+            'userType': empRole,
+            'password': empPassword,
 
-    }),
-    success: function (resp) {
-        if (resp.code == 201) {
-            confirm("Employee Is Added");
-            loadAllUsers();
-        } else {
-            alert("Please Try Again!");
+        }),
+        success: function (resp) {
+            if (resp.code == 201) {
+                confirm("Employee Is Added");
+                loadAllUsers();
+            } else {
+                alert("Please Try Again!");
+            }
         }
-    }
 
-})
+    })
 
 })
 /*<<<<<<<<<<<<<<< employee-registration <<<<<<<<<<<<<<<*/
 loadAllUsers();
+
 function loadAllUsers() {
     $.ajax({
         method: "GET",
@@ -193,20 +196,71 @@ function loadAllUsers() {
     })
 }
 
+$('#update-employee').click(function () {
+
+    var userID = $('#userID').val()
+    var empFullName = $('#fullName').val()
+    var empEmail = $('#emailAddress').val()
+    var empContact = $('#contact').val()
+    var empRole = $('#userType').val()
+    var empPassword = $('#password').val()
+
+    $.ajax({
+        method: "PUT",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/updateUser",
+        data: JSON.stringify({
+            "userID": userID,
+            'fullName': empFullName,
+            'email': empEmail,
+            'contact': empContact,
+            'userType': empRole,
+            'password': empPassword,
+
+        }),
+        success: function (resp) {
+            if (resp.code == 200) {
+                confirm("Employee Is Updated");
+                loadAllUsers();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+})
+
+$('#delete-employee').click(function () {
+    var userID = $('#userID').val()
+    $.ajax({
+        method: "DELETE",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/" + userID,
+        success: function (resp) {
+            if (resp.code == 200) {
+                confirm("Employee Is Deleted");
+                loadAllUsers();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+})
 /*<<<< employee-table-selecting-functions <<<<*/
-$("#empTable").on("click","tr",function() {
-    let userID=$(this).children('td:eq(0)').text();
-    let fullName=$(this).children('td:eq(1)').text();
-    let email=$(this).children('td:eq(2)').text();
-    let contact=$(this).children('td:eq(3)').text();
-    let userType=$(this).children('td:eq(4)').text();
-    let password=$(this).children('td:eq(5)').text();
+$("#empTable").on("click", "tr", function () {
+    let userID = $(this).children('td:eq(0)').text();
+    let fullName = $(this).children('td:eq(1)').text();
+    let email = $(this).children('td:eq(2)').text();
+    let contact = $(this).children('td:eq(3)').text();
+    let userType = $(this).children('td:eq(4)').text();
+    let password = $(this).children('td:eq(5)').text();
 
     setEmpValuesToInputFields(userID, fullName, email, contact, userType, password)
 
 
 });
-function setEmpValuesToInputFields(userID, fullName, email, contact, userType, password){
+
+function setEmpValuesToInputFields(userID, fullName, email, contact, userType, password) {
     $("#userID").val(userID)
     $("#fullName").val(fullName)
     $("#emailAddress").val(email)
@@ -217,6 +271,294 @@ function setEmpValuesToInputFields(userID, fullName, email, contact, userType, p
 
 /*----------------Audit-Management Controlling Section--------------------------*/
 /*----------------Customer-Management Controlling Section-----------------------*/
+
+
+$('#save-customer').click(function () {
+
+    var customerName = $('#customerFullName').val()
+    var email = $('#customerEmailAddress').val()
+    var dob = $('#dob').val()
+    var contact = $('#customerContact').val()
+    var address = $('#customerAddress').val()
+
+    /*-------------employee-registration-------------*/
+
+    $.ajax({
+        method: "POST",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/customer/registerCustomer",
+        data: JSON.stringify({
+            'customerName': customerName,
+            'email': email,
+            'dob': dob,
+            'contact': contact,
+            'address': address,
+
+        }),
+        success: function (resp) {
+            if (resp.code == 201) {
+                confirm("Employee Is Added");
+                loadAllCusomers();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+
+})
+/*<<<<<<<<<<<<<<< employee-registration <<<<<<<<<<<<<<<*/
+loadAllCusomers();
+
+function loadAllCusomers() {
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/customer",
+        success: function (resp) {
+            if (resp.code == 200) {
+
+                $('#customerTable>tbody').empty();
+
+                for (let emp of resp.data) {
+                    let customerID = emp.customerID;
+                    let customerName = emp.customerName;
+                    let email = emp.email;
+                    let dob = emp.dob;
+                    let contact = emp.contact;
+                    let address = emp.address;
+
+                    var row = `<tr><td>${customerID}</td><td>${customerName}</td><td>${email}</td><td>${dob}</td><td>${contact}</td><td>${address}</td></tr>`;
+                    $('#customerTable>tbody').append(row);
+                }
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+}
+
+$('#update-customer').click(function () {
+
+    var customerID = $('#customerGenID').val()
+    var customerName = $('#customerFullName').val()
+    var email = $('#customerEmailAddress').val()
+    var dob = $('#dob').val()
+    var contact = $('#customerContact').val()
+    var address = $('#customerAddress').val()
+
+    $.ajax({
+        method: "PUT",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/customer/updateCustomer",
+        data: JSON.stringify({
+            "customerID": customerID,
+            'customerName': customerName,
+            'email': email,
+            'dob': dob,
+            'contact': contact,
+            'address': address,
+
+        }),
+        success: function (resp) {
+            if (resp.code == 200) {
+                confirm("Customer Is Updated");
+                loadAllCusomers();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+})
+
+$('#delete-customer').click(function () {
+    var customerID = $('#customerGenID').val()
+    $.ajax({
+        method: "DELETE",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/customer/" + customerID,
+        success: function (resp) {
+            if (resp.code == 200) {
+                confirm("Customer Is Deleted");
+                loadAllAccounts();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+})
+/*<<<< employee-table-selecting-functions <<<<*/
+$("#customerTable").on("click", "tr", function () {
+    let customerID = $(this).children('td:eq(0)').text();
+    let customerName = $(this).children('td:eq(1)').text();
+    let email = $(this).children('td:eq(2)').text();
+    let dob = $(this).children('td:eq(3)').text();
+    let contact = $(this).children('td:eq(4)').text();
+    let address = $(this).children('td:eq(5)').text();
+
+    setCusValuesToInputFields(customerID, customerName, email, dob, contact, address)
+
+
+});
+
+function setCusValuesToInputFields(customerID, customerName, email, dob, contact, address) {
+    $("#customerGenID").val(customerID)
+    $("#customerFullName").val(customerName)
+    $("#customerEmailAddress").val(email)
+    $("#dob").val(dob)
+    $("#customerContact").val(contact)
+    $("#customerAddress").val(address)
+}
+
 /*----------------Account-Management Controlling Section------------------------*/
+$('#accountType').click(function () {
+    let selectedAccountType = $('#accountType').val()
+    if (selectedAccountType === 'Saving Account') {
+        $('#defaultAmount').val(500.00)
+    } else {
+        $('#defaultAmount').val(2000.00)
+    }
+})
+
+
+$('#save-account').click(function () {
+
+    var accountNumber = $('#accountNumber').val()
+    var accountName = $('#accountName').val()
+    var openDate = $('#openDate').val()
+    var defaultAmount = $('#defaultAmount').val()
+    var accountType = $('#accountType').val()
+    var customerID = $('#customerID').val()
+
+    /*-------------Account-registration-------------*/
+
+    $.ajax({
+        method: "POST",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/account/createAccount",
+        data: JSON.stringify({
+            'accountNo': accountNumber,
+            'accountName': accountName,
+            'openDate': openDate,
+            'defaultAmount': defaultAmount,
+            'accountTypeID': {'accountTypeID':accountType},
+            'customerID': {'customerID':customerID},
+
+        }),
+        success: function (resp) {
+            if (resp.code == 201) {
+                confirm("Account Is Created");
+                loadAllAccounts();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+
+})
+/*<<<<<<<<<<<<<<< Account-registration <<<<<<<<<<<<<<<*/
+loadAllAccounts();
+
+function loadAllAccounts() {
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/account",
+        success: function (resp) {
+            if (resp.code == 200) {
+
+                $('#accountTables>tbody').empty();
+
+                for (let acc of resp.data) {
+                    var row = `<tr><td>${acc.accountNo}</td><td>${acc.accountName}</td><td>${acc.openDate}</td><td>${acc.defaultAmount}</td><td>${acc.accountTypeID.accountType}</td><td>${acc.customerID.customerID}</td></tr>`;
+                    $('#accountTables>tbody').append(row);
+                }
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+}
+
+
+$('#update-account').click(function () {
+
+    var accountNumber = $('#accountNumber').val()
+    var accountName = $('#accountName').val()
+    var openDate = $('#openDate').val()
+    var defaultAmount = $('#defaultAmount').val()
+    var accountType = $('#accountType').val()
+    var customerID = $('#customerID').val()
+
+    $.ajax({
+        method: "PUT",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/account/updateAccount",
+        data: JSON.stringify({
+            'accountNo': accountNumber,
+            'accountName': accountName,
+            'openDate': openDate,
+            'defaultAmount': defaultAmount,
+            'accountTypeID': {'accountTypeID':accountType},
+            'customerID': {'customerID':customerID},
+
+        }),
+        success: function (resp) {
+            if (resp.code == 200) {
+                confirm("Account Is Updated");
+                loadAllAccounts();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+})
+
+$('#delete-account').click(function () {
+    var accountNumber = $('#accountNumber').val()
+    $.ajax({
+        method: "DELETE",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/account/" + accountNumber,
+        success: function (resp) {
+            if (resp.code == 200) {
+                confirm("Account Is Deleted");
+                loadAllAccounts();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+})
+
+
+/*<<<< Account-table-selecting-functions <<<<*/
+
+$("#accountTables").on("click", "tr", function () {
+    let accountNumber = $(this).children('td:eq(0)').text();
+    let accountName = $(this).children('td:eq(1)').text();
+    let openDate = $(this).children('td:eq(2)').text();
+    let defaultAmount = $(this).children('td:eq(3)').text();
+    let accountType = $(this).children('td:eq(4)').text();
+    let customerID = $(this).children('td:eq(5)').text();
+
+    setAccValuesToInputFields(accountNumber, accountName, openDate, defaultAmount, accountType, customerID)
+
+
+});
+
+function setAccValuesToInputFields(accountNumber, accountName, openDate, defaultAmount, accountType, customerID) {
+    $("#accountNumber").val(accountNumber)
+    $("#accountName").val(accountName)
+    $("#openDate").val(openDate)
+    $("#defaultAmount").val(defaultAmount)
+    $("#accountType").val(accountType)
+    $("#customerID").val(customerID)
+}
+
+
 /*----------------TransAction-Management Controlling Section--------------------*/
 /*----------------Report-Management Controlling Section-------------------------*/

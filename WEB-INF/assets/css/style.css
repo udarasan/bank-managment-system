@@ -19,7 +19,7 @@
 }
 
 .menu {
-    background-color: #ffffff;
+    background-color: #b3b3b3;
     height: 100vh;
     margin: 0px;
 }
@@ -50,56 +50,56 @@
 }
 
 .menu-btn {
-    background-color: white;
+    background-color: #b3b3b3;
     margin-bottom: 5px;
     color: #1a1e21;
-    border: solid white;
+    border: solid #b3b3b3;
 }
 
 .menu-btn:hover {
-    background-color: #00c5ff;
-    border: solid #00c5ff;
+    background-color: #929292;
+    border: solid #929292;
 }
 
 .menu-btn:focus {
-    background-color: #00c5ff;
-    border: solid #00c5ff;
+    background-color: #929292;
+    border: solid #929292;
 
 }
 
 /* section css */
 #dashBoard-section {
-    background-color: #dc6512;
+    background-color: #ececec;
     height: 100vh;
 }
 
 #employee-section {
-    background-color: #dc6512;
+    background-color: #ececec;
     height: 100vh;
 }
 
 #audit-section {
-    background-color: #dc6512;
+    background-color: #ececec;
     height: 100vh;
 }
 
 #customer-section {
-    background-color: #dc6512;
+    background-color: #ececec;
     height: 100vh;
 }
 
 #account-section {
-    background-color: #dc6512;
+    background-color: #ececec;
     height: 100vh;
 }
 
 #transaction-section {
-    background-color: #dc6512;
+    background-color: #ececec;
     height: 100vh;
 }
 
 #report-section {
-    background-color: #dc6512;
+    background-color: #ececec;
     height: 100vh;
 }
 

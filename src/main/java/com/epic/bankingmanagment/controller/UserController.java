@@ -47,8 +47,8 @@ public class UserController {
     }
 
 
-    @DeleteMapping(params = {"id"}, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity deleteUser(@RequestParam int id) {
+    @DeleteMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity deleteUser(@PathVariable int id) {
         userService.deleteUser(id);
         return new ResponseEntity(new StandardResponse("200", "Done", null), HttpStatus.OK);
     }
