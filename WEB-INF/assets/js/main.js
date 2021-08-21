@@ -7,19 +7,49 @@ function hideAll() {
 }
 
 /*--------------------------User-Login-Check--------------------------*/
-
+var userFullName
+var userID
+var userType
 $('#loginButton').click(function () {
-    const n = 1;
+    var email=$('#exampleInputEmail1').val()
+    var password=$('#exampleInputPassword').val()
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/login?email="+email+"&password="+password,
+        success: function (resp) {
+            if (resp.code == 202) {
+
+                 userFullName =resp.data.fullName
+                 userID =resp.data.userID
+                 userType =resp.data.userType
+                    $('#applicationUserName').text(userFullName+"😉")
+                    $('#applicationUserID').text("Employee ID : "+userID)
+                if (userType=='Admin'){
+                    hideAllWithoutDashBoard();
+                }else {
+                    hideAllNotAvailableForEmployee();
+                }
+                console.log(fullName,userID,userType)
+
+                console.log(resp.data)
+            } else {
+                alert("Wrong Password OR Email");
+            }
+        }
+
+    })
+    /*const n = 1;
     if (n === 1) {
         hideAllWithoutDashBoard();
     } else if (n === 2) {
         hideAllNotAvailableForEmployee();
-    }
+    }*/
 })
 
 $('#logOutButton').click(function () {
-    $('.loginPage').css({display: "block"});
-    $('.dashBoard').css({display: "none"});
+    //$('.loginPage').css({display: "block"});
+    //$('.dashBoard').css({display: "none"});
+    location.replace('http://localhost:63342/jquery-3.4.1.min.js/WEB-INF/index.html')
 })
 
 function hideAllWithoutDashBoard() {
@@ -633,6 +663,7 @@ $('#doTransaction').click(function () {
         success: function (resp) {
             if (resp.code == 201) {
                 confirm("Transaction Completed!");
+                loadAllTransaction();
             } else {
                 alert("Please Try Again!");
             }

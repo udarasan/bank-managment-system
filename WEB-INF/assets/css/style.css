@@ -123,8 +123,19 @@
 .transactionCrud-section{
     width: 535px;
 }
-#transTables{
+.navbar-light .navbar-brand {
+    margin-bottom: 0;
 
+}
+#applicationUserName{
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+}
+#applicationUserID{
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
 }
 .table-section{
     height: 300px;
