@@ -11,6 +11,7 @@ var userFullName
 var userID
 var userType
 $('#loginButton').click(function () {
+
     var email=$('#exampleInputEmail1').val()
     var password=$('#exampleInputPassword').val()
     $.ajax({
@@ -24,9 +25,13 @@ $('#loginButton').click(function () {
                  userType =resp.data.userType
                     $('#applicationUserName').text(userFullName+"😉")
                     $('#applicationUserID').text("Employee ID : "+userID)
+                let auditType='Login';
+
                 if (userType=='Admin'){
+                    auditReportSender(auditType,userType)
                     hideAllWithoutDashBoard();
                 }else {
+                    auditReportSender(auditType,userType)
                     hideAllNotAvailableForEmployee();
                 }
                 console.log(fullName,userID,userType)
@@ -50,6 +55,8 @@ $('#logOutButton').click(function () {
     //$('.loginPage').css({display: "block"});
     //$('.dashBoard').css({display: "none"});
     location.replace('http://localhost:63342/jquery-3.4.1.min.js/WEB-INF/index.html')
+    let auditType='Log Out'
+    auditReportSender(auditType,userType)
 })
 
 function hideAllWithoutDashBoard() {
@@ -227,7 +234,11 @@ $('#save-employee').click(function () {
         success: function (resp) {
             if (resp.code == 201) {
                 confirm("Employee Is Added");
+                let auditType='Add New Employee'
+                let auditDesc='Added Employee Name :'+empFullName
+                auditReportSender(auditType,auditDesc)
                 loadAllUsers();
+                setDashBoardTilesValues()
             } else {
                 alert("Please Try Again!");
             }
@@ -293,6 +304,9 @@ $('#update-employee').click(function () {
             if (resp.code == 200) {
                 confirm("Employee Is Updated");
                 loadAllUsers();
+                let auditType='Update Employee Details'
+                let auditDesc='Updated Employee Full Name :'+empFullName
+                auditReportSender(auditType,auditDesc)
             } else {
                 alert("Please Try Again!");
             }
@@ -310,6 +324,10 @@ $('#delete-employee').click(function () {
             if (resp.code == 200) {
                 confirm("Employee Is Deleted");
                 loadAllUsers();
+                let auditType='Delete Employee Details'
+                let auditDesc='Deleted Employee ID :'+userID
+                auditReportSender(auditType,auditDesc)
+                setDashBoardTilesValues()
             } else {
                 alert("Please Try Again!");
             }
@@ -341,6 +359,65 @@ function setEmpValuesToInputFields(userID, fullName, email, contact, userType, p
 }
 
 /*----------------Audit-Management Controlling Section--------------------------*/
+
+var today = new Date();
+var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+
+function auditReportSender(auditType,auditDesc) {
+
+    $.ajax({
+        method: "POST",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/audit/recordAudit",
+        data: JSON.stringify({
+            'auditID':'',
+            'auditDate': date,
+            'auditTime': time,
+            'auditType': auditType,
+            'auditDesc': auditDesc,
+            'userID': {'userID':userID},
+
+        }),
+        success: function (resp) {
+            if (resp.code == 201) {
+                loadAllAuditData();
+            } else {
+                alert("Please Try Again!");
+            }
+        }
+
+    })
+}
+function loadAllAuditData() {
+
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/audit",
+        success: function (resp) {
+            if (resp.code == 200) {
+
+                $('#auditTable>tbody').empty();
+
+                for (let audit of resp.data) {
+                    let auditID = audit.auditID;
+                    let auditDate = audit.auditDate;
+                    let auditTime = audit.auditTime;
+                    let auditType = audit.auditType;
+                    let auditDesc = audit.auditDesc;
+                    let userID = audit.userID;
+
+                    var row = `<tr><td>${auditID}</td><td>${auditDate}</td><td>${auditTime}</td><td>${auditType}</td><td>${auditDesc}</td><td>${audit.userID.userID}</td></tr>`;
+                    $('#auditTable>tbody').append(row);
+                }
+
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+}
 /*----------------Customer-Management Controlling Section-----------------------*/
 
 
@@ -370,6 +447,10 @@ $('#save-customer').click(function () {
             if (resp.code == 201) {
                 confirm("Employee Is Added");
                 loadAllCusomers();
+                let auditType='Save New Customer'
+                let auditDesc='Customer Name :'+customerName
+                auditReportSender(auditType,auditDesc)
+                setDashBoardTilesValues()
             } else {
                 alert("Please Try Again!");
             }
@@ -435,6 +516,9 @@ $('#update-customer').click(function () {
             if (resp.code == 200) {
                 confirm("Customer Is Updated");
                 loadAllCusomers();
+                let auditType='Update Customer'
+                let auditDesc='Updated Customer ID :'+customerID
+                auditReportSender(auditType,auditDesc)
             } else {
                 alert("Please Try Again!");
             }
@@ -452,6 +536,10 @@ $('#delete-customer').click(function () {
             if (resp.code == 200) {
                 confirm("Customer Is Deleted");
                 loadAllAccounts();
+                let auditType='Delete Customer'
+                let auditDesc='Deleted Customer ID :'+customerID
+                auditReportSender(auditType,auditDesc)
+                setDashBoardTilesValues()
             } else {
                 alert("Please Try Again!");
             }
@@ -521,6 +609,11 @@ $('#save-account').click(function () {
             if (resp.code == 201) {
                 confirm("Account Is Created");
                 loadAllAccounts();
+                let auditType='Create New Account'
+                let auditDesc='Created Account No :'+accountNumber
+                auditReportSender(auditType,auditDesc)
+                setDashBoardTilesValues()
+
             } else {
                 alert("Please Try Again!");
             }
@@ -580,6 +673,9 @@ $('#update-account').click(function () {
             if (resp.code == 200) {
                 confirm("Account Is Updated");
                 loadAllAccounts();
+                let auditType='Update Account Details'
+                let auditDesc='Updated Account No :'+accountNumber
+                auditReportSender(auditType,auditDesc)
             } else {
                 alert("Please Try Again!");
             }
@@ -597,6 +693,10 @@ $('#delete-account').click(function () {
             if (resp.code == 200) {
                 confirm("Account Is Deleted");
                 loadAllAccounts();
+                let auditType='Delete Account'
+                let auditDesc='Deleted Account No :'+accountNumber
+                auditReportSender(auditType,auditDesc)
+                setDashBoardTilesValues()
             } else {
                 alert("Please Try Again!");
             }
@@ -664,6 +764,9 @@ $('#doTransaction').click(function () {
             if (resp.code == 201) {
                 confirm("Transaction Completed!");
                 loadAllTransaction();
+                let auditType='New Transaction For AccNO : '+accountNumber
+                let auditDesc='Transaction Type :'+transType
+                auditReportSender(auditType,auditDesc)
             } else {
                 alert("Please Try Again!");
             }

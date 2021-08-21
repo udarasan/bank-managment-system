@@ -39,7 +39,7 @@ public class DashBoardController {
     }
     @GetMapping(path = "/employeeCount",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getEmployeeCount() {
-        int employeeCount = customerService.getAvailableCustomerCount();
+        int employeeCount = userService.getAvailableEmployeeCount();
         return new ResponseEntity(new StandardResponse("200", "Done", employeeCount), HttpStatus.OK);
     }
 }

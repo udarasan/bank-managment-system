@@ -140,3 +140,6 @@
 .table-section{
     height: 300px;
 }
+#auditTableForCSSOnly{
+    height: 700px;
+}
