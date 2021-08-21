@@ -40,10 +40,13 @@ public class TransactionImpl implements TransactionService {
 
         //accountRepo.getAccountTypeID(account.getAccountNo());
 
+        //check account type(Saving OR Current)
         if (accountRepo.getAccountTypeID(account.getAccountNo()) == 1) {
             System.out.println("Saving");
             TransactionType transactionType = dto.getTransactionTypeID();
             int transactionTypeID = transactionType.getTransactionTypeID();
+            //check Transaction Type type(Withdrawal , Deposit or Money Transfer)
+            //this section for Saving account money withdrawal
             if (transactionTypeID == 1) {
                 if (transActionAmount < availableAccountAmount - 500.00) {
                     System.out.println(availableAccountAmount - 500.00);
@@ -56,7 +59,7 @@ public class TransactionImpl implements TransactionService {
                     throw new ValidateException("You Have Not Enough Money In Your Account");
                 }
 
-
+            //this section for Saving account money Deposit
             } else if (transactionTypeID == 2) {
                 System.out.println("else-if");
 
@@ -64,7 +67,7 @@ public class TransactionImpl implements TransactionService {
                 accountRepo.updateAccountAmount(updateAmount, account.getAccountNo());
 
                 transactionRepo.save(mapper.map(dto, Transaction.class));
-
+            //this section for Saving account money Transfer
             } else {
                 System.out.println("else");
                 if (transActionAmount < availableAccountAmount) {
@@ -81,6 +84,8 @@ public class TransactionImpl implements TransactionService {
 
             TransactionType transactionType = dto.getTransactionTypeID();
             int transactionTypeID = transactionType.getTransactionTypeID();
+            //check Transaction Type type(Withdrawal , Deposit or Money Transfer)
+            //this section for current account money withdrawal
             if (transactionTypeID == 1) {
                 if (transActionAmount < availableAccountAmount - 2000.00) {
                     System.out.println(availableAccountAmount - 2000.00);
@@ -93,7 +98,7 @@ public class TransactionImpl implements TransactionService {
                     throw new ValidateException("You Have Not Enough Money In Your Account");
                 }
 
-
+            //this section for Current account money Deposit
             } else if (transactionTypeID == 2) {
                 System.out.println("else-if");
 
@@ -101,7 +106,7 @@ public class TransactionImpl implements TransactionService {
                 accountRepo.updateAccountAmount(updateAmount, account.getAccountNo());
 
                 transactionRepo.save(mapper.map(dto, Transaction.class));
-
+            //this section for Current account money Transfer
             } else {
                 System.out.println("else");
                 if (transActionAmount < availableAccountAmount) {
