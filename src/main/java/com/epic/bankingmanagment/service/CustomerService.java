@@ -16,4 +16,6 @@ public interface CustomerService {
     CustomerDTO searchCustomer(int id);
 
     void updateCustomer(CustomerDTO dto);
+
+    int getAvailableCustomerCount();
 }

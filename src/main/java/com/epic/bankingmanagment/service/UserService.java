@@ -19,4 +19,6 @@ public interface UserService {
     UserDTO searchUser(int id);
 
     void updateUser(UserDTO dto);
+
+    int getAvailableEmployeeCount();
 }

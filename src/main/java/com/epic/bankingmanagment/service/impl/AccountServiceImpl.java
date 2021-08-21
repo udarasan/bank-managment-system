@@ -67,4 +67,9 @@ public class AccountServiceImpl implements AccountService {
 
         }
     }
+
+    @Override
+    public int getAvailableAccountCount() {
+        return accountRepo.getAvailableAccountCount();
+    }
 }

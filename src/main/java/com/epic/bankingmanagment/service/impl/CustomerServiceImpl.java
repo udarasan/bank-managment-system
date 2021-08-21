@@ -65,4 +65,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         }
     }
+
+    @Override
+    public int getAvailableCustomerCount() {
+        return customerRepo.getAvailableCustomerCount();
+    }
 }

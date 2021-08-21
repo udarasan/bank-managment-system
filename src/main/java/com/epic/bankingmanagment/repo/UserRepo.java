@@ -9,4 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface UserRepo  extends JpaRepository<User,Integer> {
     @Query(value = "SELECT * FROM User WHERE email=?1", nativeQuery = true)
     User getUser(String email);
+
+    @Query(value = "select count(userID) from User where userType='Employee'" , nativeQuery = true)
+    int getAvailableEmployeeCount();
 }

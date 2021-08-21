@@ -71,7 +71,7 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title">Customer Count</h5>
-                                            <h1 class="card-text">100</h1>
+                                            <h1 class="card-text" id="customerCount"></h1>
                                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                                         </div>
                                     </div>
@@ -86,7 +86,7 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title">Account Count</h5>
-                                            <h1 class="card-text">100</h1>
+                                            <h1 class="card-text" id="accountCount"></h1>
                                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                                         </div>
                                     </div>
@@ -101,7 +101,7 @@
                                     <div class="col-md-8">
                                         <div class="card-body">
                                             <h5 class="card-title">Employee Count</h5>
-                                            <h1 class="card-text">100</h1>
+                                            <h1 class="card-text" id="employeeCount"></h1>
                                             <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                                         </div>
                                     </div>
@@ -373,13 +373,17 @@
                                 <input type="text" class="form-control" id="transAmount" placeholder="Amount">
                             </div>
                             <div class="mb-2 mx-3">
+                                <label for="trans-Desc" class="form-label">trans-Desc</label>
+                                <input type="text" class="form-control" id="trans-Desc" placeholder="trans-Desc">
+                            </div>
+                            <div class="mb-2 mx-3">
                                 <label for="trans-Type" class="form-label">TransAction Type</label>
 
                                 <select class="form-select" id="trans-Type">
                                     <option selected>Choose...</option>
-                                    <option value="Withdrawal">Withdrawal</option>
-                                    <option value="Deposit">Deposit</option>
-                                    <option value="Transfer">Transfer</option>
+                                    <option value="1">Withdrawal</option>
+                                    <option value="2">Deposit</option>
+                                    <option value="3">Transfer</option>
                                 </select>
                             </div>
                             <div class="mb-2 mx-3">
@@ -401,18 +405,22 @@
                             </div>
 
                         </div>
-                        <div class="table-section mx-3 py-3">
-                            <table class="table table-bordered border-primary">
-                                <thead>
+                        <div class="table-section  mx-3 py-3" style="overflow-y: scroll ">
+                            <table class="table table-bordered border-primary table-hover" id="transTables" >
+                                <thead  class="table-dark">
                                 <tr>
-                                    <th scope="col">UserID</th>
-                                    <th scope="col">Employee Name</th>
-                                    <th scope="col">Email Address</th>
-                                    <th scope="col">Contact NO</th>
-                                    <th scope="col">Employee Role</th>
-                                    <th scope="col">Password</th>
+                                    <th scope="col">TransactionID</th>
+                                    <th scope="col">Amount</th>
+                                    <th scope="col">Transaction Description</th>
+                                    <th scope="col">Date</th>
+                                    <th scope="col">Account NO</th>
+                                    <th scope="col">User ID</th>
+                                    <th scope="col">TransAction Type ID</th>
                                 </tr>
                                 </thead>
+                                <tbody>
+
+                                </tbody>
 
                             </table>
                         </div>

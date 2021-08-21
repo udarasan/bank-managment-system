@@ -18,4 +18,6 @@ public interface AccountService {
     AccountDTO searchAccount(int id);
 
     void updateAccount(AccountDTO dto);
+
+    int getAvailableAccountCount();
 }

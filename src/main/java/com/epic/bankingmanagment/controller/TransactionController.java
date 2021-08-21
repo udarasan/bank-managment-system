@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 @CrossOrigin
 @RestController
 @RequestMapping("api/v1/transaction")
@@ -21,5 +23,10 @@ public class TransactionController {
     public ResponseEntity doTransaction(@RequestBody TransactionDTO dto) {
         transactionService.doTransaction(dto);
         return new ResponseEntity(new StandardResponse("201", "Done", dto), HttpStatus.CREATED);
+    }
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity getAllCustomer() {
+        ArrayList<TransactionDTO> allTransactions = transactionService.getAllTransactions();
+        return new ResponseEntity(new StandardResponse("200", "Done", allTransactions), HttpStatus.OK);
     }
 }

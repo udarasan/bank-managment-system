@@ -126,6 +126,47 @@ $('#report-menu-btn').click(function () {
 })
 
 /*----------------DashBoard-Management Controlling Section----------------------*/
+setDashBoardTilesValues()
+function setDashBoardTilesValues() {
+
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/dashboard/customerCount",
+        success: function (resp) {
+            if (resp.code == 200) {
+                $('#customerCount').text(resp.data)
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/dashboard/accountCount",
+        success: function (resp) {
+            if (resp.code == 200) {
+                $('#accountCount').text(resp.data)
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/dashboard/employeeCount",
+        success: function (resp) {
+            if (resp.code == 200) {
+                $('#employeeCount').text(resp.data)
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+
+}
 
 /*----------------Employee-Management Controlling Section-----------------------*/
 
@@ -563,34 +604,35 @@ function setAccValuesToInputFields(accountNumber, accountName, openDate, default
 /*----------------TransAction-Management Controlling Section--------------------*/
 
 $('#doTransaction').click(function () {
-    var defaultAmount = $('#defaultAmount').val()
+    var transAmount = $('#transAmount').val()
+    var transDesc= $('#trans-Desc').val()
+    var transDate = $('#trans-Date').val()
+
     var accountNumber = $('#trans-accountNumber').val()
-    var accountName = $('#accountName').val()
-    var openDate = $('#openDate').val()
+    var userID = $('#trans-userID').val()
 
-    var accountType = $('#accountType').val()
-    var customerID = $('#customerID').val()
+    var transType = $('#trans-Type').val()
 
-    /*-------------Account-registration-------------*/
+
+    /*-------------Do-Transaction-------------*/
 
     $.ajax({
         method: "POST",
         contentType: "application/json",
-        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/account/createAccount",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/transaction/doTransaction",
         data: JSON.stringify({
-
-            'amount': accountNumber,
-            'description': accountName,
-            'date': openDate,
-            'accountNo': defaultAmount,
-            'userID': {'accountTypeID':accountType},
-            'transactionTypeID': {'customerID':customerID},
+            "transactionID":"",
+            'amount': transAmount,
+            'description': transDesc,
+            'date': transDate,
+            'accountNo': {'accountNo':accountNumber},
+            'userID': {'userID':userID},
+            'transactionTypeID': {'transactionTypeID':transType},
 
         }),
         success: function (resp) {
             if (resp.code == 201) {
-                confirm("Account Is Created");
-                loadAllAccounts();
+                confirm("Transaction Completed!");
             } else {
                 alert("Please Try Again!");
             }
@@ -599,5 +641,31 @@ $('#doTransaction').click(function () {
     })
 
 })
+
+/*-------------Do-Transaction-------------*/
+loadAllTransaction();
+
+function loadAllTransaction() {
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/transaction",
+        success: function (resp) {
+            if (resp.code == 200) {
+
+                $('#transTables>tbody').empty();
+
+                for (let trans of resp.data) {
+                    var row = `<tr><td>${trans.transactionID}</td><td>${trans.amount}</td><td>${trans.description}</td><td>${trans.date}</td><td>${trans.accountNo.accountNo}</td><td>${trans.userID.userID}</td><td>${trans.transactionTypeID.transactionTypeID}</td></tr>`;
+                    $('#transTables>tbody').append(row);
+                }
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+}
+
+
 
 /*----------------Report-Management Controlling Section-------------------------*/

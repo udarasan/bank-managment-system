@@ -80,4 +80,9 @@ public class UserServiceImpl implements UserService {
 
         }
     }
+
+    @Override
+    public int getAvailableEmployeeCount() {
+        return userRepo.getAvailableEmployeeCount();
+    }
 }
