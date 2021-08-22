@@ -2,6 +2,7 @@ package com.epic.bankingmanagment.controller;
 
 import com.epic.bankingmanagment.dto.CustomerDTO;
 import com.epic.bankingmanagment.dto.TransactionDTO;
+import com.epic.bankingmanagment.dto.UserDTO;
 import com.epic.bankingmanagment.service.TransactionService;
 import com.epic.bankingmanagment.util.StandardResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,10 @@ public class TransactionController {
         ArrayList<TransactionDTO> allTransactions = transactionService.getAllTransactions();
         return new ResponseEntity(new StandardResponse("200", "Done", allTransactions), HttpStatus.OK);
     }
+    @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity searchUser(@PathVariable int id) {
+        TransactionDTO transactionDTO = transactionService.searchTransaction(id);
+        return new ResponseEntity(new StandardResponse("200", "Done", transactionDTO), HttpStatus.OK);
+    }
+
 }

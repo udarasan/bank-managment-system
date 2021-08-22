@@ -1,9 +1,11 @@
 package com.epic.bankingmanagment.service.impl;
 
 import com.epic.bankingmanagment.dto.TransactionDTO;
+import com.epic.bankingmanagment.dto.UserDTO;
 import com.epic.bankingmanagment.entity.Account;
 import com.epic.bankingmanagment.entity.Transaction;
 import com.epic.bankingmanagment.entity.TransactionType;
+import com.epic.bankingmanagment.entity.User;
 import com.epic.bankingmanagment.exception.ValidateException;
 import com.epic.bankingmanagment.repo.AccountRepo;
 import com.epic.bankingmanagment.repo.TransactionRepo;
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -128,5 +131,14 @@ public class TransactionImpl implements TransactionService {
         List<Transaction> all = transactionRepo.findAll();
         return mapper.map(all, new TypeToken<ArrayList<TransactionDTO>>() {
         }.getType());
+    }
+
+    @Override
+    public TransactionDTO searchTransaction(int id) {
+        Optional<Transaction> transaction = transactionRepo.findById(id);
+        if (transaction.isPresent()) {
+            return mapper.map(transaction.get(), TransactionDTO.class);
+        }
+        return null;
     }
 }

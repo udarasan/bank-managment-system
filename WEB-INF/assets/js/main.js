@@ -42,6 +42,10 @@ $('#loginButton').click(function () {
             }
         }
 
+    }).done(function () {
+
+    }).fail(function () {
+        alert("Wrong Password OR Email");
     })
     /*const n = 1;
     if (n === 1) {
@@ -851,10 +855,32 @@ function loadAllTransaction() {
     })
 }
 
+$('#transSearch').click(function () {
+    let transID=$('#transSearchID').val()
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/transaction/"+transID,
+        success: function (resp) {
+            if (resp.code == 200) {
+                $('#transPDFID').text(resp.data.transactionID)
+                $('#transPDFAmount').text(resp.data.amount)
+                $('#bill-footer').text(resp.data.userID.userID)
+
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+})
+
+
+
 
 
 /*----------------Report-Management Controlling Section-------------------------*/
 /*----------------PDF-Generate Controlling Section-------------------------*/
+
 $('#pdfDownloadBtn').click(function () {
     generatePDF();
 })
