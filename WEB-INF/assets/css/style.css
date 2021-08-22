@@ -8,6 +8,9 @@
     align-items: center;
     width: 800px;
 }
+.bg-light {
+    background-color: #6c757d!important;
+}
 
 .loginPage {
     /*background-color: #0b5ed7;*/
@@ -142,4 +145,52 @@
 }
 #auditTableForCSSOnly{
     height: 700px;
+}
+#trans-Table{
+    height: 500px;
+}
+#pdf-trans{
+    align-content: center;
+    background-color: #ffffff;
+    border: solid #4b4b4c;
+    width: 50vh;
+    padding: 20px;
+}
+#bill-left-head{
+    /*margin-right: 20px;*/
+    float: right;
+    position: relative;
+    width: 250px;
+}
+
+#transPDFAmount{
+    font-size: 50px;
+}
+#transPDFAmountSec{
+    display: flex;
+}
+#transPDFID{
+    margin-bottom: 0;
+}
+#transPDFDate{
+    margin-bottom: 0;
+}
+#transPDFCurrentAmountSec{
+    margin-left: 20px;
+}
+#bill-Current-Amount{
+    background-color: #ffffff;
+    height: 200px;
+}
+#bill-footer{
+    height: 44px;
+    background-color: #ffffff;
+    position: relative;
+    float: bottom;
+}
+#title{
+    margin-bottom: 0;
+}
+#pdfDownloadBtn{
+
 }

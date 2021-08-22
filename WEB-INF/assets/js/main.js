@@ -247,6 +247,30 @@ $('#save-employee').click(function () {
     })
 
 })
+$('#search-emp').click(function () {
+    let userID=$('#userID').val()
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/"+userID,
+        success: function (resp) {
+            if (resp.code == 200) {
+
+
+                $('#fullName').val(resp.data.fullName)
+                $('#emailAddress').val(resp.data.email)
+                $('#contact').val(resp.data.contact)
+                $('#userType').val(resp.data.userType)
+                $('#password').val(resp.data.password)
+                $('#defaultAmount').val(resp.data.defaultAmount)
+
+
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+})
 /*<<<<<<<<<<<<<<< employee-registration <<<<<<<<<<<<<<<*/
 loadAllUsers();
 
@@ -547,6 +571,31 @@ $('#delete-customer').click(function () {
 
     })
 })
+
+$('#search-Account').click(function () {
+    let searchAccID=$('#search-accNO').val()
+    $.ajax({
+        method: "GET",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/account/"+searchAccID,
+        success: function (resp) {
+            if (resp.code == 200) {
+
+
+                $('#accountName').val(resp.data.accountName)
+                $('#accountNumber').val(resp.data.accountNo)
+                $('#customerID').val(resp.data.customerID.customerName)
+                $('#accountType').val(resp.data.accountTypeID.accountType)
+                $('#openDate').val(resp.data.openDate)
+                $('#defaultAmount').val(resp.data.defaultAmount)
+
+
+            } else {
+                alert("Employee Data Not Loading");
+            }
+        }
+
+    })
+})
 /*<<<< employee-table-selecting-functions <<<<*/
 $("#customerTable").on("click", "tr", function () {
     let customerID = $(this).children('td:eq(0)').text();
@@ -736,10 +785,10 @@ function setAccValuesToInputFields(accountNumber, accountName, openDate, default
 $('#doTransaction').click(function () {
     var transAmount = $('#transAmount').val()
     var transDesc= $('#trans-Desc').val()
-    var transDate = $('#trans-Date').val()
+    //var transDate = $('#trans-Date').val()
 
     var accountNumber = $('#trans-accountNumber').val()
-    var userID = $('#trans-userID').val()
+    //var userID = $('#trans-userID').val()
 
     var transType = $('#trans-Type').val()
 
@@ -754,7 +803,7 @@ $('#doTransaction').click(function () {
             "transactionID":"",
             'amount': transAmount,
             'description': transDesc,
-            'date': transDate,
+            'date': date,
             'accountNo': {'accountNo':accountNumber},
             'userID': {'userID':userID},
             'transactionTypeID': {'transactionTypeID':transType},
@@ -767,6 +816,8 @@ $('#doTransaction').click(function () {
                 let auditType='New Transaction For AccNO : '+accountNumber
                 let auditDesc='Transaction Type :'+transType
                 auditReportSender(auditType,auditDesc)
+                loadAllAccounts();
+                generatePDF();
             } else {
                 alert("Please Try Again!");
             }
@@ -803,3 +854,21 @@ function loadAllTransaction() {
 
 
 /*----------------Report-Management Controlling Section-------------------------*/
+/*----------------PDF-Generate Controlling Section-------------------------*/
+$('#pdfDownloadBtn').click(function () {
+    generatePDF();
+})
+
+function generatePDF() {
+    const element=document.getElementById("pdf-trans")
+    var opt = {
+        margin:       1,
+        filename:     'tranaction.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+    };
+    html2pdf().from(element).set(opt).save();
+    //html2pdf(element, opt);
+    //html2pdf().from(element).save();
+}

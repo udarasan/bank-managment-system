@@ -160,7 +160,7 @@
                                 <div class="mt-3">
                                     <form class="d-flex">
                                         <input class="form-control me-2" type="search" placeholder="Search User ID" aria-label="Search" id="userID" >
-                                        <button class="btn btn-outline-success" type="button">Search</button>
+                                        <button class="btn btn-outline-success" type="button" id="search-emp">Search</button>
                                     </form>
                                 </div>
                             </div>
@@ -228,11 +228,11 @@
                                 <thead class="table-dark">
                                 <tr>
                                     <th scope="col">Audit ID</th>
-                                    <th scope="col">User ID</th>
                                     <th scope="col">Audit Date</th>
                                     <th scope="col">Audit Time</th>
                                     <th scope="col">Audit Type</th>
                                     <th scope="col">Audit Desc</th>
+                                    <th scope="col">Audit User ID</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -341,8 +341,8 @@
                                 </div>
                                 <div class="mt-3">
                                     <form class="d-flex">
-                                        <input class="form-control me-2" type="search" placeholder="Search Account ID" aria-label="Search" >
-                                        <button class="btn btn-outline-success" type="button">Search</button>
+                                        <input class="form-control me-2" type="search" placeholder="Search Account ID" aria-label="Search" id="search-accNO" >
+                                        <button class="btn btn-outline-success" type="button" id="search-Account">Search</button>
                                     </form>
                                 </div>
                             </div>
@@ -368,55 +368,79 @@
                         </div>
                     </div>
                     <!----------------------------------------------there is a transaction management area---------------------------------------------->
-                    <div id="transaction-section">
+                    <div id="transaction-section" >
                         <h4 class="mx-3 py-3">Transaction Management</h4>
-                        <div class="mx-5 transactionCrud-section">
-                            <div class="mb-2 mx-3">
-                                <label for="trans-accountNumber" class="form-label">Account Number</label>
-                                <input type="text" class="form-control" id="trans-accountNumber" placeholder="Account Number">
-                            </div>
-                            <div class="mb-2 mx-3">
-                                <label for="trans-userID" class="form-label">User ID</label>
-                                <input type="text" class="form-control" id="trans-userID" placeholder="User ID" >
-                            </div>
-                            <div class="mb-2 mx-3">
-                                <label for="transAmount" class="form-label">Transaction Amount</label>
-                                <input type="text" class="form-control" id="transAmount" placeholder="Amount">
-                            </div>
-                            <div class="mb-2 mx-3">
-                                <label for="trans-Desc" class="form-label">trans-Desc</label>
-                                <input type="text" class="form-control" id="trans-Desc" placeholder="trans-Desc">
-                            </div>
-                            <div class="mb-2 mx-3">
-                                <label for="trans-Type" class="form-label">TransAction Type</label>
-
-                                <select class="form-select" id="trans-Type">
-                                    <option selected>Choose...</option>
-                                    <option value="1">Withdrawal</option>
-                                    <option value="2">Deposit</option>
-                                    <option value="3">Transfer</option>
-                                </select>
-                            </div>
-                            <div class="mb-2 mx-3">
-                                <label for="trans-Date" class="form-label">Trans Action Date</label>
-                                <input type="date" class="form-control" id="trans-Date" placeholder="Transaction Date">
-                            </div>
-                            <div style="display: flex">
-                                <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
-                                    <button type="button" class="btn btn-primary" id="doTransaction">Save</button>
-                                    <button type="button" class="btn btn-primary">Delete</button>
-                                    <button type="button" class="btn btn-primary">Update</button>
+                        <div style="display: flex">
+                            <div class="mx-5 transactionCrud-section">
+                                <div class="mb-2 mx-3">
+                                    <label for="trans-accountNumber" class="form-label">Account Number</label>
+                                    <input type="text" class="form-control" id="trans-accountNumber" placeholder="Account Number">
                                 </div>
-                                <div class="mt-3">
-                                    <form class="d-flex">
-                                        <input class="form-control me-2" type="search" placeholder="Search User ID" aria-label="Search" >
-                                        <button class="btn btn-outline-success" type="button">Search</button>
-                                    </form>
+                                <!--<div class="mb-2 mx-3">
+                                    <label for="trans-userID" class="form-label">User ID</label>
+                                    <input type="text" class="form-control" id="trans-userID" placeholder="User ID" >
+                                </div>-->
+                                <div class="mb-2 mx-3">
+                                    <label for="transAmount" class="form-label">Transaction Amount</label>
+                                    <input type="text" class="form-control" id="transAmount" placeholder="Amount">
                                 </div>
+                                <div class="mb-2 mx-3">
+                                    <label for="trans-Desc" class="form-label">trans-Desc</label>
+                                    <input type="text" class="form-control" id="trans-Desc" placeholder="trans-Desc">
+                                </div>
+                                <div class="mb-2 mx-3">
+                                    <label for="trans-Type" class="form-label">TransAction Type</label>
+
+                                    <select class="form-select" id="trans-Type">
+                                        <option selected>Choose...</option>
+                                        <option value="1">Withdrawal</option>
+                                        <option value="2">Deposit</option>
+                                        <option value="3">Transfer</option>
+                                    </select>
+                                </div>
+                                <!--<div class="mb-2 mx-3">
+                                    <label for="trans-Date" class="form-label">Trans Action Date</label>
+                                    <input type="date" class="form-control" id="trans-Date" placeholder="Transaction Date">
+                                </div>-->
+                                <div style="display: flex">
+                                    <div class="btn-group mx-3 mt-3" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-primary" id="doTransaction">Place Transaction</button>
+                                        <!--<button type="button" class="btn btn-primary">Delete</button>
+                                        <button type="button" class="btn btn-primary">Update</button>-->
+                                    </div>
+                                    <div class="mt-3">
+                                        <form class="d-flex">
+                                            <input class="form-control me-2" type="search" placeholder="Search User ID" aria-label="Search" >
+                                            <button class="btn btn-outline-success" type="button">Search</button>
+                                        </form>
+                                    </div>
+                                </div>
+
                             </div>
 
+                            <div id="pdf-trans" >
+
+                                <div id="bill-left-head">
+                                    <p id="transPDFID">Transaction ID : </p>
+                                    <p id="transPDFDate">Date : </p>
+                                    <div id="transPDFAmountSec">
+                                        <h1 id="transPDFAmount">8000</h1>
+                                    </div>
+                                </div>
+                                <div id="bill-Current-Amount">
+                                    <div id="transCurrentPDFAmountSec">
+                                        <p id="title">Current Balance </p>
+                                        <h1 id="transCurrentPDFAmount">8000</h1>
+                                    </div>
+                                </div>
+                                <div id="bill-footer">UserID</div>
+                            </div>
+                            <button id="pdfDownloadBtn"> Download</button>
                         </div>
-                        <div class="table-section  mx-3 py-3" style="overflow-y: scroll ">
+
+
+
+                        <div class="table-section  mx-3 py-3" style="overflow-y: scroll " id="trans-Table">
                             <table class="table table-bordered border-primary table-hover" id="transTables" >
                                 <thead  class="table-dark">
                                 <tr>
@@ -455,5 +479,6 @@
 <script src="assets/js/bootstrap.min.js"></script>
 <script src="assets/js/jquery-3.4.1.min.js"></script>
 <script src="assets/js/main.js"></script>
+<script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
 </body>
 </html>
