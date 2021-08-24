@@ -27,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void registerUser(UserDTO dto) {
+        if (userRepo.existsByEmail(dto.getEmail())){
+            throw new ValidateException("This User Already Have An Account!");
+        }
 
         userRepo.save(mapper.map(dto, User.class));
     }
@@ -46,10 +49,12 @@ public class UserServiceImpl implements UserService {
             return mapper.map(all, UserResponseDTO.class);
 
         } else {
-            return null;
+            throw new ValidateException("No User For This Email..!");
         }
 
     }
+
+
 
     @Override
     public boolean nicAlreadyExists(int id) {
@@ -65,19 +70,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDTO searchUser(int id) {
-        Optional<User> customer = userRepo.findById(id);
-        if (customer.isPresent()) {
-            return mapper.map(customer.get(), UserDTO.class);
+    public UserDTO searchUser(String id) {
+        Optional<User> user = Optional.ofNullable(userRepo.findByEmail(id));
+        if (user.isPresent()) {
+            return mapper.map(user.get(), UserDTO.class);
+        }else {
+            throw new ValidateException("No User for This Email..!");
         }
-        return null;
     }
 
     @Override
     public void updateUser(UserDTO dto) {
         if (userRepo.existsById(dto.getUserID())) {
             userRepo.save(mapper.map(dto, User.class));
-
+        }
+        else {
+            throw new ValidateException("No User for This Email..!");
         }
     }
 

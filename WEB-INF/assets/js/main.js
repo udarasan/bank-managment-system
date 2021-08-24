@@ -14,9 +14,10 @@ $('#loginButton').click(function () {
 
     var email=$('#exampleInputEmail1').val()
     var password=$('#exampleInputPassword').val()
+    const checkPassword=btoa(password)
     $.ajax({
         method: "GET",
-        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/login?email="+email+"&password="+password,
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/login?email="+email+"&password="+checkPassword,
         success: function (resp) {
             if (resp.code == 202) {
 
@@ -34,18 +35,28 @@ $('#loginButton').click(function () {
                     auditReportSender(auditType,userType)
                     hideAllNotAvailableForEmployee();
                 }
-                console.log(fullName,userID,userType)
+                console.log(userFullName,userID,userType)
 
                 console.log(resp.data)
             } else {
-                alert("Wrong Password OR Email");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Wrong Password or Email Address',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
             }
         }
 
     }).done(function () {
 
     }).fail(function () {
-        alert("Wrong Password OR Email");
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Wrong Password or Email Address',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
     })
     /*const n = 1;
     if (n === 1) {
@@ -82,6 +93,7 @@ function hideAllNotAvailableForEmployee() {
     $('.loginPage').css({display: "none"});
     $('.dashBoard').css({display: "block"});
 
+
     $('#dashboard-menu-btn').css({display: "none"});
     $('#employee-menu-btn').css({display: "none"});
     $('#audit-menu-btn').css({display: "none"});
@@ -90,9 +102,9 @@ function hideAllNotAvailableForEmployee() {
     $('#employee-section').css({display: "none"});
     $('#audit-section').css({display: "none"});
     $('#customer-section').css({display: "block"});
-    $('#account-section').css({display: "block"});
-    $('#transaction-section').css({display: "block"});
-    $('#report-section').css({display: "block"});
+    $('#account-section').css({display: "none"});
+    $('#transaction-section').css({display: "none"});
+    $('#report-section').css({display: "none"});
 
 }
 
@@ -211,6 +223,82 @@ function setDashBoardTilesValues() {
 
 /*----------------Employee-Management Controlling Section-----------------------*/
 
+/*-----RegEXValidation Function-----*/
+
+var userNameRegEx=/^[a-zA-Z '.-]{3,30}$/;
+var emailRegEx=/^\w+([\.-]?\w+)@\w+([\.-]?\w+)(\.\w{2,3})+$/;
+var contactNumber=/^([+]\d{2})?\d{10}$/;
+var passwordRegEx=/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+$('#fullName').on('keyup',function (event) {
+    /*if (event.key=="Enter"){
+
+    }*/
+    let inputID=$("#fullName").val();
+
+    if (userNameRegEx.test(inputID)){
+        $("#fullName").css('border','2px solid green');
+        $('#save-employee').prop('disabled', false);
+        $('#delete-employee').prop('disabled', false);
+        $('#update-employee').prop('disabled', false);
+    }else{
+        $("#fullName").css('border','2px solid red');
+        $('#save-employee').prop('disabled', true);
+        $('#delete-employee').prop('disabled', true);
+        $('#update-employee').prop('disabled', true);
+    }
+})
+$('#emailAddress').on('keyup',function (event) {
+    /*if (event.key=="Enter"){
+
+    }*/
+    let inputID=$("#emailAddress").val();
+    if (emailRegEx.test(inputID)){
+        $("#emailAddress").css('border','2px solid green');
+        $('#save-employee').prop('disabled', false);
+        $('#delete-employee').prop('disabled', false);
+        $('#update-employee').prop('disabled', false);
+    }else{
+        $("#emailAddress").css('border','2px solid red');
+        $('#save-employee').prop('disabled', true);
+        $('#delete-employee').prop('disabled', true);
+        $('#update-employee').prop('disabled', true);
+    }
+})
+$('#contact').on('keyup',function (event) {
+    /*if (event.key=="Enter"){
+
+    }*/
+    let inputID=$("#contact").val();
+    if (contactNumber.test(inputID)){
+        $("#contact").css('border','2px solid green');
+        $('#save-employee').prop('disabled', false);
+        $('#delete-employee').prop('disabled', false);
+        $('#update-employee').prop('disabled', false);;
+    }else{
+        $("#contact").css('border','2px solid red');
+        $('#save-employee').prop('disabled', true);
+        $('#delete-employee').prop('disabled', true);
+        $('#update-employee').prop('disabled', true);
+    }
+})
+$('#password').on('keyup',function (event) {
+    /*if (event.key=="Enter"){
+
+    }*/
+    let inputID=$("#password").val();
+    if (passwordRegEx.test(inputID)){
+        $("#password").css('border','2px solid green');
+        $('#save-employee').prop('disabled', false);
+        $('#delete-employee').prop('disabled', false);
+        $('#update-employee').prop('disabled', false);
+    }else{
+        $("#password").css('border','2px solid red');
+        $('#save-employee').prop('disabled', true);
+        $('#delete-employee').prop('disabled', true);
+        $('#update-employee').prop('disabled', true);
+    }
+})
 
 $('#save-employee').click(function () {
 
@@ -220,60 +308,117 @@ $('#save-employee').click(function () {
     var empContact = $('#contact').val()
     var empRole = $('#userType').val()
     var empPassword = $('#password').val()
+    const base64=btoa(empPassword)
+
+    if (empFullName!='' & empEmail!=''& empContact!='' & empPassword!=''& empRole!='Choose...'){
+        $.ajax({
+            method: "POST",
+            contentType: "application/json",
+            url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/registerUser",
+            data: JSON.stringify({
+                'fullName': empFullName,
+                'email': empEmail,
+                'contact': empContact,
+                'userType': empRole,
+                'password': base64,
+
+            }),
+            success: function (resp) {
+                if (resp.code == 201) {
+                    Swal.fire(
+                        'Good job!',
+                        'Employee Added Success',
+                        'success'
+                    )
+                    let auditType='Add New Employee'
+                    let auditDesc='Added Employee Name :'+empFullName
+                    auditReportSender(auditType,auditDesc)
+                    loadAllUsers();
+                    setDashBoardTilesValues()
+                } else {
+                    alert("Please Try Again!");
+                }
+            }
+
+        }).done(function () {
+
+        }).fail(function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'This User Is Already Exists! Update only',
+                footer: '<a href="">Why do I have this issue?</a>'
+            })
+        })
+    }else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please Fill All Input Fields',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
+    }
 
     /*-------------employee-registration-------------*/
 
-    $.ajax({
-        method: "POST",
-        contentType: "application/json",
-        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/registerUser",
-        data: JSON.stringify({
-            'fullName': empFullName,
-            'email': empEmail,
-            'contact': empContact,
-            'userType': empRole,
-            'password': empPassword,
 
-        }),
-        success: function (resp) {
-            if (resp.code == 201) {
-                confirm("Employee Is Added");
-                let auditType='Add New Employee'
-                let auditDesc='Added Employee Name :'+empFullName
-                auditReportSender(auditType,auditDesc)
-                loadAllUsers();
-                setDashBoardTilesValues()
-            } else {
-                alert("Please Try Again!");
-            }
-        }
-
-    })
 
 })
+/*RealTime Search Employee*/
+$(document).ready(function() {
+    $("#userID").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#empTableBody tr").filter(function() {
+            $(this).toggle($(this).text()
+                .toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
+
 $('#search-emp').click(function () {
     let userID=$('#userID').val()
-    $.ajax({
-        method: "GET",
-        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/"+userID,
-        success: function (resp) {
-            if (resp.code == 200) {
+    if(userID!=''){
+        $.ajax({
+            method: "GET",
+            url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/"+userID,
+            success: function (resp) {
+                if (resp.code == 200) {
 
 
-                $('#fullName').val(resp.data.fullName)
-                $('#emailAddress').val(resp.data.email)
-                $('#contact').val(resp.data.contact)
-                $('#userType').val(resp.data.userType)
-                $('#password').val(resp.data.password)
-                $('#defaultAmount').val(resp.data.defaultAmount)
+                    $('#fullName').val(resp.data.fullName)
+                    $('#emailAddress').val(resp.data.email)
+                    $('#contact').val(resp.data.contact)
+                    $('#userType').val(resp.data.userType)
+                    let password=resp.data.password
+                    const decoded =atob(password)
+                    $('#password').val(decoded)
+                    $('#defaultAmount').val(resp.data.defaultAmount)
 
 
-            } else {
-                alert("Employee Data Not Loading");
+                } else {
+                    alert("Employee Data Not Loading");
+                }
             }
-        }
 
-    })
+        }).done(function () {
+
+        }).fail(function () {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please Use Valid User-Email For Individual Searching',
+                footer: '<a href="">Why do I have this issue?</a>'
+            })
+        })
+    }else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please Use Valid User-Email For Individual Searching',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
+    }
+
 })
 /*<<<<<<<<<<<<<<< employee-registration <<<<<<<<<<<<<<<*/
 loadAllUsers();
@@ -314,7 +459,8 @@ $('#update-employee').click(function () {
     var empContact = $('#contact').val()
     var empRole = $('#userType').val()
     var empPassword = $('#password').val()
-
+    const checkEmpPassword=btoa(empPassword)
+if (userID!='' & empFullName!='' & empEmail!=''& empContact!='' & empPassword!=''& empRole!='Choose...'){
     $.ajax({
         method: "PUT",
         contentType: "application/json",
@@ -325,12 +471,16 @@ $('#update-employee').click(function () {
             'email': empEmail,
             'contact': empContact,
             'userType': empRole,
-            'password': empPassword,
+            'password': checkEmpPassword,
 
         }),
         success: function (resp) {
             if (resp.code == 200) {
-                confirm("Employee Is Updated");
+                Swal.fire(
+                    'Good job!',
+                    'Employee Update Success',
+                    'success'
+                )
                 loadAllUsers();
                 let auditType='Update Employee Details'
                 let auditDesc='Updated Employee Full Name :'+empFullName
@@ -340,11 +490,32 @@ $('#update-employee').click(function () {
             }
         }
 
+    }).done(function () {
+
+    }).fail(function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Please Use Valid User-Email OR Valid ID',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
     })
+}else {
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Required All Fields',
+        footer: '<a href="">Why do I have this issue?</a>'
+    })
+}
+
+
 })
 
 $('#delete-employee').click(function () {
     var userID = $('#userID').val()
+
+
     $.ajax({
         method: "DELETE",
         url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/" + userID,
@@ -357,14 +528,39 @@ $('#delete-employee').click(function () {
                 auditReportSender(auditType,auditDesc)
                 setDashBoardTilesValues()
             } else {
-                alert("Please Try Again!");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
             }
         }
 
+    }).done(function () {
+
+    }).fail(function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
     })
+})
+$('#clear-input-field').click(function () {
+    $('#userID').val('')
+    $('#fullName').val('')
+    $('#emailAddress').val('')
+    $('#contact').val('')
+    $('#userType').val('Choose...')
+    $('#password').val('')
+    $('#save-employee').prop('disabled', false);
 })
 /*<<<< employee-table-selecting-functions <<<<*/
 $("#empTable").on("click", "tr", function () {
+    $('#save-employee').prop('disabled', true);
+
     let userID = $(this).children('td:eq(0)').text();
     let fullName = $(this).children('td:eq(1)').text();
     let email = $(this).children('td:eq(2)').text();
@@ -383,7 +579,8 @@ function setEmpValuesToInputFields(userID, fullName, email, contact, userType, p
     $("#emailAddress").val(email)
     $("#contact").val(contact)
     $("#userType").val(userType)
-    $("#password").val(password)
+    const decodePassTB=atob(password)
+    $("#password").val(decodePassTB)
 }
 
 /*----------------Audit-Management Controlling Section--------------------------*/
@@ -628,8 +825,10 @@ $('#accountType').click(function () {
     let selectedAccountType = $('#accountType').val()
     if (selectedAccountType === 'Saving Account') {
         $('#defaultAmount').val(500.00)
+        //$('#saveValue').val(1)
     } else {
         $('#defaultAmount').val(2000.00)
+       // $('#CurrentValue').val(1)
     }
 })
 

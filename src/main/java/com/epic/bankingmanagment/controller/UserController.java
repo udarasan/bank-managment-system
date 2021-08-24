@@ -41,7 +41,7 @@ public class UserController {
 
     }
     @GetMapping(path = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity searchUser(@PathVariable int id) {
+    public ResponseEntity searchUser(@PathVariable String id) {
         UserDTO userDTO = userService.searchUser(id);
         return new ResponseEntity(new StandardResponse("200", "Done", userDTO), HttpStatus.OK);
     }
