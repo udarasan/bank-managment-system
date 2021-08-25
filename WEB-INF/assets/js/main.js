@@ -13,9 +13,10 @@ $('#loginButton').click(function () {
     var email=$('#exampleInputEmail1').val()
     var password=$('#exampleInputPassword').val()
     const checkPassword=btoa(password)
+    const checkHashPSW=(sha256(password));
     $.ajax({
         method: "GET",
-        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/login?email="+email+"&password="+checkPassword,
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/login?email="+email+"&password="+checkHashPSW,
         success: function (resp) {
             if (resp.code == 202) {
 
@@ -310,7 +311,9 @@ $('#save-employee').click(function () {
     var empContact = $('#contact').val()
     var empRole = $('#userType').val()
     var empPassword = $('#password').val()
-    const base64=btoa(empPassword)
+    //const base64=btoa(empPassword)
+
+    var hashPSW=(sha256(empPassword));
 
     if (empFullName!='' & empEmail!=''& empContact!='' & empPassword!=''& empRole!='Choose...'){
         $.ajax({
@@ -322,7 +325,7 @@ $('#save-employee').click(function () {
                 'email': empEmail,
                 'contact': empContact,
                 'userType': empRole,
-                'password': base64,
+                'password': hashPSW,
 
             }),
             success: function (resp) {
@@ -467,7 +470,8 @@ $('#update-employee').click(function () {
     var empContact = $('#contact').val()
     var empRole = $('#userType').val()
     var empPassword = $('#password').val()
-    const checkEmpPassword=btoa(empPassword)
+    const checkEmpPassword=sha256(empPassword)
+
 if (userID!='' & empFullName!='' & empEmail!=''& empContact!='' & empPassword!=''& empRole!='Choose...'){
     $.ajax({
         method: "PUT",
@@ -561,6 +565,69 @@ $('#delete-employee').click(function () {
         })
     })
 })
+
+$('#passwordRest').click(function () {
+
+    let sendEmail=$('#emailAddress').val()
+    let newPassword=$('#password').val()
+
+    passwordResetEmailSend(sendEmail,newPassword)
+})
+function passwordResetEmailSend(sendEmail,newPassword) {
+    let hashPass=sha256(newPassword)
+
+    $.ajax({
+        method: "PUT",
+        contentType: "application/json",
+        url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/resetPassword?email="+sendEmail+"&password="+hashPass,
+        success: function (resp) {
+            if (resp.code == 202) {
+                Swal.fire(
+                    'Good job!',
+                    'Employee Update Success',
+                    'success'
+                )
+                loadAllUsers();
+                let auditType='Password Reset'
+                let auditDesc='Updated Employee Full Name :'+sendEmail
+                auditReportSender(auditType,auditDesc)
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
+            }
+        }
+
+    }).done(function () {
+
+    }).fail(function () {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wronga!',
+            footer: '<a href="">Why do I have this issue?</a>'
+        })
+    })
+
+
+    var templateParams = {
+        name: 'James',
+        notes: 'Check this out!',
+        reply_to:sendEmail,
+        message:'This Is Your New Login Password : '+newPassword
+    };
+
+    emailjs.send('service_o9pbnc7', 'template_yp1xmqt', templateParams)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+        }, function(error) {
+            console.log('FAILED...', error);
+        });
+}
+
 function clearFields() {
     $('#userID').val('')
     $('#fullName').val('')

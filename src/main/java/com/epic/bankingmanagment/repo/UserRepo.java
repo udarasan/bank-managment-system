@@ -4,6 +4,7 @@ package com.epic.bankingmanagment.repo;
 import com.epic.bankingmanagment.dto.UserDTO;
 import com.epic.bankingmanagment.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 
@@ -17,4 +18,8 @@ public interface UserRepo  extends JpaRepository<User,Integer> {
     boolean existsByEmail(String Email);
 
     User findByEmail(String Email);
+
+    @Modifying
+    @Query(value = "update User set password =?2 where email=?1",nativeQuery = true)
+    void updatePassword(String Email,String password);
 }

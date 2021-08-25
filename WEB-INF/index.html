@@ -163,7 +163,9 @@
                                     <form class="d-flex">
                                         <input class="form-control me-2" type="search" placeholder="Search User ID" aria-label="Search" id="userID" >
                                         <button class="btn btn-outline-success" type="button" id="search-emp">Search</button>
+                                        <button type="button" class="btn btn-primary" id="passwordRest">Reset</button>
                                     </form>
+
                                 </div>
                             </div>
 
@@ -484,5 +486,13 @@
 <script src="assets/js/main.js"></script>
 <script src="assets/js/sweetalert2.all.min.js"></script>
 <script src="https://raw.githack.com/eKoopmans/html2pdf/master/dist/html2pdf.bundle.js"></script>
+<script src="assets/js/sha256.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+<script type="text/javascript">
+    (function() {
+        emailjs.init("user_4foPcZglnmw09P9cdHovO");
+    })();
+</script>
 </body>
 </html>

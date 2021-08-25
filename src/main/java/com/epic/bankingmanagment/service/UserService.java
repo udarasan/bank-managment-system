@@ -21,4 +21,6 @@ public interface UserService {
     void updateUser(UserDTO dto);
 
     int getAvailableEmployeeCount();
+
+    void updatePassword(String Email,String password);
 }

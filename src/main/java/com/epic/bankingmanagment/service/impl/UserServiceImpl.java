@@ -93,4 +93,17 @@ public class UserServiceImpl implements UserService {
     public int getAvailableEmployeeCount() {
         return userRepo.getAvailableEmployeeCount();
     }
+
+    @Override
+    public void updatePassword(String email, String password) {
+        if (userRepo.existsByEmail(email)){
+
+            userRepo.updatePassword(email,password);
+        }else {
+            throw new ValidateException("This User Already Have An Account!");
+        }
+
+
+
+    }
 }

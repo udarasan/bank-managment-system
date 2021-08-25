@@ -58,5 +58,14 @@ public class UserController {
         userService.updateUser(dto);
         return new ResponseEntity(new StandardResponse("200", "Done", dto), HttpStatus.OK);
     }
+    @PutMapping(path = "/resetPassword")
+    public ResponseEntity resetPassword(@RequestParam String email, @RequestParam String password) {
+         userService.updatePassword(email, password);
+        System.out.println(email);
+        System.out.println(password);
+        return new ResponseEntity(new StandardResponse("202", "Done", null), HttpStatus.ACCEPTED);
+
+
+    }
 
 }
