@@ -1,11 +1,9 @@
 hideAll();
-
 function hideAll() {
     $('.loginPage').css({display: "block"});
     $('.dashBoard').css({display: "none"});
 
 }
-
 /*--------------------------User-Login-Check--------------------------*/
 var userFullName
 var userID
@@ -126,6 +124,8 @@ $('#employee-menu-btn').click(function () {
     $('#transaction-section').css({display: "none"});
     $('#report-section').css({display: "none"});
 
+
+
     /*-------fire function through in selecting menu items--------*/
 
     loadAllUsers();
@@ -178,6 +178,7 @@ $('#report-menu-btn').click(function () {
     $('#report-section').css({display: "block"});
 })
 
+
 /*----------------DashBoard-Management Controlling Section----------------------*/
 setDashBoardTilesValues()
 function setDashBoardTilesValues() {
@@ -222,6 +223,7 @@ function setDashBoardTilesValues() {
 }
 
 /*----------------Employee-Management Controlling Section-----------------------*/
+
 
 /*-----RegEXValidation Function-----*/
 
@@ -334,6 +336,7 @@ $('#save-employee').click(function () {
                     let auditDesc='Added Employee Name :'+empFullName
                     auditReportSender(auditType,auditDesc)
                     loadAllUsers();
+                    clearFields()
                     setDashBoardTilesValues()
                 } else {
                     alert("Please Try Again!");
@@ -444,7 +447,12 @@ function loadAllUsers() {
                     $('#empTable>tbody').append(row);
                 }
             } else {
-                alert("Employee Data Not Loading");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
             }
         }
 
@@ -486,7 +494,12 @@ if (userID!='' & empFullName!='' & empEmail!=''& empContact!='' & empPassword!='
                 let auditDesc='Updated Employee Full Name :'+empFullName
                 auditReportSender(auditType,auditDesc)
             } else {
-                alert("Please Try Again!");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!',
+                    footer: '<a href="">Why do I have this issue?</a>'
+                })
             }
         }
 
@@ -548,7 +561,7 @@ $('#delete-employee').click(function () {
         })
     })
 })
-$('#clear-input-field').click(function () {
+function clearFields() {
     $('#userID').val('')
     $('#fullName').val('')
     $('#emailAddress').val('')
@@ -556,6 +569,10 @@ $('#clear-input-field').click(function () {
     $('#userType').val('Choose...')
     $('#password').val('')
     $('#save-employee').prop('disabled', false);
+
+}
+$('#clear-input-field').click(function () {
+    clearFields();
 })
 /*<<<< employee-table-selecting-functions <<<<*/
 $("#empTable").on("click", "tr", function () {
