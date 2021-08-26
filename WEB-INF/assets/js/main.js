@@ -2,14 +2,20 @@ hideAll();
 function hideAll() {
     $('.loginPage').css({display: "block"});
     $('.dashBoard').css({display: "none"});
+    $('#passwordRest').prop('disabled', true);
 
 }
+
+$('#save-employee').prop('disabled', true);
+$('#delete-employee').prop('disabled', true);
+$('#update-employee').prop('disabled', true);
+$('#logOutButton').css({display: "none"});
 /*--------------------------User-Login-Check--------------------------*/
 var userFullName
 var userID
 var userType
 $('#loginButton').click(function () {
-
+    $('#logOutButton').css({display: "block"});
     var email=$('#exampleInputEmail1').val()
     var password=$('#exampleInputPassword').val()
     const checkPassword=btoa(password)
@@ -71,6 +77,8 @@ $('#logOutButton').click(function () {
     location.replace('http://localhost:63342/jquery-3.4.1.min.js/WEB-INF/index.html')
     let auditType='Log Out'
     auditReportSender(auditType,userType)
+    $('#logOutButton').css({display: "none"});
+
 })
 
 function hideAllWithoutDashBoard() {
@@ -241,14 +249,15 @@ $('#fullName').on('keyup',function (event) {
 
     if (userNameRegEx.test(inputID)){
         $("#fullName").css('border','2px solid green');
-        $('#save-employee').prop('disabled', false);
+        /*$('#save-employee').prop('disabled', false);
         $('#delete-employee').prop('disabled', false);
-        $('#update-employee').prop('disabled', false);
+        $('#update-employee').prop('disabled', false);*/
     }else{
         $("#fullName").css('border','2px solid red');
         $('#save-employee').prop('disabled', true);
         $('#delete-employee').prop('disabled', true);
         $('#update-employee').prop('disabled', true);
+        $('#passwordRest').prop('disabled', true);
     }
 })
 $('#emailAddress').on('keyup',function (event) {
@@ -258,14 +267,15 @@ $('#emailAddress').on('keyup',function (event) {
     let inputID=$("#emailAddress").val();
     if (emailRegEx.test(inputID)){
         $("#emailAddress").css('border','2px solid green');
-        $('#save-employee').prop('disabled', false);
+        /*$('#save-employee').prop('disabled', false);
         $('#delete-employee').prop('disabled', false);
-        $('#update-employee').prop('disabled', false);
+        $('#update-employee').prop('disabled', false);*/
     }else{
         $("#emailAddress").css('border','2px solid red');
         $('#save-employee').prop('disabled', true);
         $('#delete-employee').prop('disabled', true);
         $('#update-employee').prop('disabled', true);
+        $('#passwordRest').prop('disabled', true);
     }
 })
 $('#contact').on('keyup',function (event) {
@@ -275,14 +285,15 @@ $('#contact').on('keyup',function (event) {
     let inputID=$("#contact").val();
     if (contactNumber.test(inputID)){
         $("#contact").css('border','2px solid green');
-        $('#save-employee').prop('disabled', false);
+        /*$('#save-employee').prop('disabled', false);
         $('#delete-employee').prop('disabled', false);
-        $('#update-employee').prop('disabled', false);;
+        $('#update-employee').prop('disabled', false);;*/
     }else{
         $("#contact").css('border','2px solid red');
         $('#save-employee').prop('disabled', true);
         $('#delete-employee').prop('disabled', true);
         $('#update-employee').prop('disabled', true);
+        $('#passwordRest').prop('disabled', true);
     }
 })
 $('#password').on('keyup',function (event) {
@@ -295,11 +306,13 @@ $('#password').on('keyup',function (event) {
         $('#save-employee').prop('disabled', false);
         $('#delete-employee').prop('disabled', false);
         $('#update-employee').prop('disabled', false);
+        $('#passwordRest').prop('disabled', false);
     }else{
         $("#password").css('border','2px solid red');
         $('#save-employee').prop('disabled', true);
         $('#delete-employee').prop('disabled', true);
         $('#update-employee').prop('disabled', true);
+        $('#passwordRest').prop('disabled', true);
     }
 })
 
@@ -396,9 +409,9 @@ $('#search-emp').click(function () {
                     $('#contact').val(resp.data.contact)
                     $('#userType').val(resp.data.userType)
                     let password=resp.data.password
-                    const decoded =atob(password)
-                    $('#password').val(decoded)
-                    $('#defaultAmount').val(resp.data.defaultAmount)
+                    //const decoded =atob(password)
+                    //$('#password').val(decoded)
+                    //$('#defaultAmount').val(resp.data.defaultAmount)
 
 
                 } else {
@@ -493,7 +506,9 @@ if (userID!='' & empFullName!='' & empEmail!=''& empContact!='' & empPassword!='
                     'Employee Update Success',
                     'success'
                 )
+                updateUserEmailSend(empEmail,empPassword)
                 loadAllUsers();
+                clearFields();
                 let auditType='Update Employee Details'
                 let auditDesc='Updated Employee Full Name :'+empFullName
                 auditReportSender(auditType,auditDesc)
@@ -528,6 +543,22 @@ if (userID!='' & empFullName!='' & empEmail!=''& empContact!='' & empPassword!='
 
 
 })
+function updateUserEmailSend(empEmail,empPassword) {
+
+    var templateParams = {
+        name: 'James',
+        notes: 'Check this out!',
+        reply_to:empEmail,
+        message:'Your Account Is Update NOW ! This Is Your New Login Password : '+empPassword
+    };
+
+    emailjs.send('service_o9pbnc7', 'template_yp1xmqt', templateParams)
+        .then(function(response) {
+            console.log('SUCCESS!', response.status, response.text);
+        }, function(error) {
+            console.log('FAILED...', error);
+        });
+}
 
 $('#delete-employee').click(function () {
     var userID = $('#userID').val()
@@ -538,7 +569,12 @@ $('#delete-employee').click(function () {
         url: "http://localhost:8080/bank_managment_system_war_exploded/api/v1/user/" + userID,
         success: function (resp) {
             if (resp.code == 200) {
-                confirm("Employee Is Deleted");
+                Swal.fire(
+                    'Good job!',
+                    'Employee Is Deleted',
+                    'success'
+                )
+                clearFields();
                 loadAllUsers();
                 let auditType='Delete Employee Details'
                 let auditDesc='Deleted Employee ID :'+userID
@@ -576,6 +612,7 @@ $('#passwordRest').click(function () {
 function passwordResetEmailSend(sendEmail,newPassword) {
     let hashPass=sha256(newPassword)
 
+
     $.ajax({
         method: "PUT",
         contentType: "application/json",
@@ -584,7 +621,7 @@ function passwordResetEmailSend(sendEmail,newPassword) {
             if (resp.code == 202) {
                 Swal.fire(
                     'Good job!',
-                    'Employee Update Success',
+                    'Employee Password Reset Success',
                     'success'
                 )
                 loadAllUsers();
@@ -594,8 +631,9 @@ function passwordResetEmailSend(sendEmail,newPassword) {
             } else {
                 Swal.fire({
                     icon: 'error',
+
                     title: 'Oops...',
-                    text: 'Something went wrong!',
+                    text: 'Please Check Email Address Or Password',
                     footer: '<a href="">Why do I have this issue?</a>'
                 })
             }
@@ -635,7 +673,17 @@ function clearFields() {
     $('#contact').val('')
     $('#userType').val('Choose...')
     $('#password').val('')
-    $('#save-employee').prop('disabled', false);
+    $('#save-employee').prop('disabled', true);
+    $('#delete-employee').prop('disabled', true);
+    $('#update-employee').prop('disabled', true);
+    $('#passwordRest').prop('disabled', true);
+
+    $("#fullName").css('border','1px solid #ced4da');
+    $("#emailAddress").css('border','1px solid #ced4da');
+    $("#contact").css('border','1px solid #ced4da');
+    $("#password").css('border','1px solid #ced4da');
+
+
 
 }
 $('#clear-input-field').click(function () {
@@ -663,8 +711,8 @@ function setEmpValuesToInputFields(userID, fullName, email, contact, userType, p
     $("#emailAddress").val(email)
     $("#contact").val(contact)
     $("#userType").val(userType)
-    const decodePassTB=atob(password)
-    $("#password").val(decodePassTB)
+    //const decodePassTB=atob(password)
+    //$("#password").val(decodePassTB)
 }
 
 /*----------------Audit-Management Controlling Section--------------------------*/
